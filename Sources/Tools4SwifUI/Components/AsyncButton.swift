@@ -50,7 +50,7 @@ public struct AsyncButton<Label: View>: View {
             do {
                 try await action()
                 
-            } catch { NSAlert.displayError(error) }
+            } catch { Tools4SwiftUI.displayError(error) }
 
             isDisabled = false; showProgressView = false
         }

@@ -73,7 +73,7 @@ public struct BootstrapTask: ViewModifier {
                 do {
                     try await handler()
                     
-                } catch { NSAlert.displayError(error) }
+                } catch { Tools4SwiftUI.displayError(error) }
             }
     }
     
