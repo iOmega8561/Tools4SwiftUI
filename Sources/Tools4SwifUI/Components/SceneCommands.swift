@@ -1,6 +1,6 @@
 //
 //  SceneCommands.swift
-//  Tools4SwifUI
+//  Tools4SwiftUI
 //
 //  Created by Giuseppe Rocco on 11/11/24.
 //
@@ -56,12 +56,22 @@ public struct SceneCommands: Commands {
         CommandGroup(replacing: .help) {
             
             Link(destination: websiteURL) {
-                Text("action-help-readme")
+                Text(
+                    verbatim: .init(
+                        localized:"action-help-readme",
+                        bundle: .module
+                    )
+                )
             }
             .keyboardShortcut("/", modifiers: [.command, .control])
             
             Link(destination: websiteURL.appendingPathComponent("privacy.html")) {
-                Text("action-help-privacy")
+                Text(
+                    verbatim: .init(
+                        localized:"action-help-privacy",
+                        bundle: .module
+                    )
+                )
             }
             .keyboardShortcut("/", modifiers: [.command, .option])
         }

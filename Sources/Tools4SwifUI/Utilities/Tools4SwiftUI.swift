@@ -1,6 +1,6 @@
 //
 //  Tools4SwiftUI.swift
-//  Tools4SwifUI
+//  Tools4SwiftUI
 //
 //  Created by Giuseppe Rocco on 31/12/24.
 
@@ -27,7 +27,7 @@ import UniformTypeIdentifiers
         
         alert.alertStyle = style
         alert.informativeText = error.localizedDescription
-        alert.messageText = String(localized: "alert-title-error")
+        alert.messageText = String(localized: "alert-title-error", bundle: .module)
         alert.addButton(withTitle: "OK")
         
         if let main = NSApp.mainWindow, let key = NSApp.keyWindow {

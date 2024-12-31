@@ -4,21 +4,22 @@
 import PackageDescription
 
 let package = Package(
-    name: "Tools4SwifUI",
+    name: "Tools4SwiftUI",
+    defaultLocalization: "en",
     platforms: [
             .macOS(.v14)      // Minimum macOS version
         ],
     products: [
         // Products define the executables and libraries a package produces, making them visible to other packages.
         .library(
-            name: "Tools4SwifUI",
-            targets: ["Tools4SwifUI"]),
+            name: "Tools4SwiftUI",
+            targets: ["Tools4SwiftUI"]),
     ],
     targets: [
         // Targets are the basic building blocks of a package, defining a module or a test suite.
         // Targets can depend on other targets in this package and products from dependencies.
         .target(
-            name: "Tools4SwifUI"),
+            name: "Tools4SwiftUI"),
 
     ]
 )

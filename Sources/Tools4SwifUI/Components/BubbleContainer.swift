@@ -1,6 +1,6 @@
 //
 //  BubbleContainer.swift
-//  Tools4SwifUI
+//  Tools4SwiftUI
 //
 //  Created by Giuseppe Rocco on 14/10/24.
 //

@@ -1,6 +1,6 @@
 //
 //  ComplexStepper.swift
-//  Tools4SwifUI
+//  Tools4SwiftUI
 //
 //  Created by Giuseppe Rocco on 16/11/24.
 //

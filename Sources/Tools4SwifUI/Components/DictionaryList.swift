@@ -1,6 +1,6 @@
 //
 //  DictionaryList.swift
-//  Tools4SwifUI
+//  Tools4SwiftUI
 //
 //  Created by Giuseppe Rocco on 11/10/24.
 //
