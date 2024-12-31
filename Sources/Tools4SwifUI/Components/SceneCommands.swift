@@ -5,8 +5,6 @@
 //  Created by Giuseppe Rocco on 11/11/24.
 //
 
-#if os(macOS)
-
 import SwiftUI
 
 /// `SceneCommands` is a custom set of app commands that enhances and customizes the macOS menu bar.
@@ -76,5 +74,3 @@ public struct SceneCommands: Commands {
         self.websiteURL = websiteURL
     }
 }
-
-#endif

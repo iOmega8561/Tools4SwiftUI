@@ -6,7 +6,6 @@ import PackageDescription
 let package = Package(
     name: "Tools4SwifUI",
     platforms: [
-            .iOS(.v17),       // Minimum iOS version
             .macOS(.v14)      // Minimum macOS version
         ],
     products: [

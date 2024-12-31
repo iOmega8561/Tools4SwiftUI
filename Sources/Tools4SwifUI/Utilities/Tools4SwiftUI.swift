@@ -4,20 +4,12 @@
 //
 //  Created by Giuseppe Rocco on 31/12/24.
 
-#if os(macOS)
 import AppKit
-
-#elseif os(iOS)
-import UIKit
-
-#endif
 
 import UniformTypeIdentifiers
 
 @MainActor public enum Tools4SwiftUI {
-    
-    #if os(macOS)
-    
+        
     /// Displays an error message to the user using an `NSAlert` object.
     ///
     /// This static method provides a convenient way to present errors to the user in a UI-friendly manner
@@ -85,5 +77,4 @@ import UniformTypeIdentifiers
         } else { return openPanel.runModal() == .OK ? openPanel.url:nil }
     }
     
-    #endif
 }
