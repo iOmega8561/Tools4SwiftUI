@@ -12,6 +12,8 @@ import UIKit
 
 #endif
 
+import UniformTypeIdentifiers
+
 @MainActor public enum Tools4SwiftUI {
     
     #if os(macOS)
@@ -57,6 +59,30 @@ import UIKit
     /// - Returns: This method does not return, as it calls `exit(EXIT_FAILURE)` to terminate the application.
     public static func fatalError(_ error: Error) -> Never {
         displayError(error, style: .critical); exit(EXIT_FAILURE)
+    }
+    
+    /// This method is very useful to access the macOS system file picker
+    ///
+    /// - Parameters:
+    ///   - content: An array of possible `UTType` attributes, mainly to force selection of proper file extensions.
+    static func selectFile(_ allowedContent: UTType) async -> URL? {
+        let openPanel = NSOpenPanel()
+        
+        openPanel.canChooseFiles = true
+        openPanel.allowsMultipleSelection = false
+        openPanel.canChooseDirectories = false
+        openPanel.canCreateDirectories = false
+        openPanel.allowedContentTypes = [allowedContent]
+        
+        if let main = NSApp.mainWindow, let key = NSApp.keyWindow {
+            
+            return await openPanel.beginSheetModal(
+                
+                for: key.isSheet ? key:main
+                
+            ) == .OK ? openPanel.url:nil
+                        
+        } else { return openPanel.runModal() == .OK ? openPanel.url:nil }
     }
     
     #endif
