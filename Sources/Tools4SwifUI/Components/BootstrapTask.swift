@@ -79,7 +79,7 @@ public struct BootstrapTask: ViewModifier {
     
     public init(
     
-        handler: @Sendable @escaping () async throws -> Void
+        handler: @escaping () async throws -> Void
     
     ) { self.handler = handler }
 }
