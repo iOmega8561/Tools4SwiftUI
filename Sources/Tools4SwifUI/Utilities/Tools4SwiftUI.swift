@@ -57,7 +57,7 @@ import UniformTypeIdentifiers
     ///
     /// - Parameters:
     ///   - content: An array of possible `UTType` attributes, mainly to force selection of proper file extensions.
-    static func selectFile(_ allowedContent: UTType) async -> URL? {
+    public static func selectFile(_ allowedContent: UTType) async -> URL? {
         let openPanel = NSOpenPanel()
         
         openPanel.canChooseFiles = true
