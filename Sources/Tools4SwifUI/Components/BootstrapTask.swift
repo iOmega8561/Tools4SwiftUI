@@ -77,5 +77,9 @@ public struct BootstrapTask: ViewModifier {
             }
     }
     
-    public init(handler: @Sendable @escaping () -> Void) { self.handler = handler }
+    public init(
+    
+        handler: @Sendable @escaping () async throws -> Void
+    
+    ) { self.handler = handler }
 }
