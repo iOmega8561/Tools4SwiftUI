@@ -9,9 +9,11 @@ import SwiftUI
 
 public struct InfoWarningPopover: View {
     
-    public let textWhenNormal: String
-    public let textWhenWarning: String
-    @Binding public var warningIsShown: Bool
+    private let textWhenNormal: String
+    
+    private let textWhenWarning: String
+    
+    @Binding private var warningIsShown: Bool
     
     @State private var popoverIsShown: Bool = false
     
@@ -33,5 +35,15 @@ public struct InfoWarningPopover: View {
                 .frame(width: 300)
                 .padding()
         }
+    }
+    
+    public init(
+        textWhenNormal: String,
+        textWhenWarning: String,
+        warningIsShown: Binding<Bool>
+    ) {
+        self.textWhenNormal = textWhenNormal
+        self.textWhenWarning = textWhenWarning
+        _warningIsShown = warningIsShown
     }
 }

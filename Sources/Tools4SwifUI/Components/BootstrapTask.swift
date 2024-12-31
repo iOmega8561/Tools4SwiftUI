@@ -41,7 +41,7 @@ public struct BootstrapTask: ViewModifier {
     /// `handler` is an asynchronous throwing closure that will be executed when the view appears.
     /// If the task completes successfully, no further actions are taken. If an error occurs, it
     /// is handled by displaying an alert through `TesseractError`.
-    public let handler: () async throws -> Void
+    private let handler: () async throws -> Void
     
     /// An instance of `StateHolder` to track whether the task has already run.
     ///
@@ -76,4 +76,6 @@ public struct BootstrapTask: ViewModifier {
                 } catch { NSAlert.displayError(error) }
             }
     }
+    
+    public init(handler: @escaping () -> Void) { self.handler = handler }
 }
