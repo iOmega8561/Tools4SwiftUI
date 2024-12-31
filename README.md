@@ -39,7 +39,7 @@ Add the package to your Xcode project:
 1. In Xcode, go to **File > Add Packages**.
 2. Enter the URL for this repository:  
    ```plaintext
-   https://github.com/your-username/Tools4SwiftUI.git
+   https://github.com/iOmega8561/Tools4SwiftUI.git
    ```
 3. Choose the appropriate version rules and add the package.
 
