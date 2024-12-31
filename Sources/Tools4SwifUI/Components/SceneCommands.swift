@@ -12,7 +12,7 @@ import SwiftUI
 @available(macOS 13.0, *)
 public struct SceneCommands: Commands {
     
-    public let websiteURL: URL
+    private let websiteURL: URL
     
     @Environment(\.openWindow) private var openWindow
     
@@ -40,6 +40,10 @@ public struct SceneCommands: Commands {
             }
             .keyboardShortcut("/", modifiers: [.command, .option])
         }
+    }
+    
+    public init(websiteURL: URL) {
+        self.websiteURL = websiteURL
     }
 }
 
