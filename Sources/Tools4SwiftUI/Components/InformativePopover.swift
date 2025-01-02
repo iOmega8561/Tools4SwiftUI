@@ -1,5 +1,5 @@
 //
-//  InfoWarningPopover.swift
+//  InformativePopover.swift
 //  Tools4SwiftUI
 //
 //  Created by Giuseppe Rocco on 16/11/24.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-/// `InfoWarningPopover` is a reusable popover component that displays informational or warning messages.
+/// `InformativePopover` is a reusable popover component that displays informational or warning messages.
 ///
 /// This view provides a button that toggles a popover when tapped. The button dynamically adjusts its icon and style
 /// based on whether a warning state is active. The popover displays a localized message, which varies depending on
@@ -21,7 +21,7 @@ import SwiftUI
 ///   - Dynamic content based on the warning state.
 ///   - Visual distinction between normal and warning states using color and icon changes.
 ///   - Localized messages for both states.
-public struct InfoWarningPopover: View {
+public struct InformativePopover: View {
     
     /// The text to display in the popover when there is no warning.
     ///
@@ -33,17 +33,17 @@ public struct InfoWarningPopover: View {
     /// This text is also localized and is shown when `warningIsShown` is `true`.
     private let textWhenWarning: String
     
-    /// A binding that determines whether the warning state is active.
+    /// A boolean that determines whether the warning state is active.
     ///
     /// When `warningIsShown` is `true`, the button displays a warning icon, and the popover shows the warning text.
-    @Binding private var warningIsShown: Bool
+    private let warningIsShown: Bool
     
     /// A state variable that tracks whether the popover is currently shown.
     ///
     /// This variable toggles when the button is tapped, showing or hiding the popover.
     @State private var popoverIsShown: Bool = false
     
-    /// The body of the `InfoWarningPopover`, defining its layout and behavior.
+    /// The body of the `InformativePopover`, defining its layout and behavior.
     ///
     /// The view includes:
     /// - A button with a dynamic icon (`info.circle` or `exclamationmark.triangle`) and color styling based on `warningIsShown`.
@@ -68,7 +68,8 @@ public struct InfoWarningPopover: View {
         }
     }
     
-    /// Initializes an `InfoWarningPopover` with the given parameters.
+    /// Initializes an `InformativePopover` with the given parameters. Two strings for Normal and Warning are
+    /// required so that it's not necessary to build if statements or ternary operators in the parent view.
     ///
     /// - Parameters:
     ///   - textWhenNormal: The text to display in the popover when there is no warning.
@@ -77,10 +78,28 @@ public struct InfoWarningPopover: View {
     public init(
         textWhenNormal: String,
         textWhenWarning: String,
-        warningIsShown: Binding<Bool>
+        warningIsShown: Bool
     ) {
         self.textWhenNormal = textWhenNormal
         self.textWhenWarning = textWhenWarning
-        _warningIsShown = warningIsShown
+        self.warningIsShown = warningIsShown
+    }
+    
+    /// A convenience initializer that requires only one text. Warning or Normal will be determined by the boolean.
+    /// This init should be used when only one text is available or ternary operators are used to pass the correct string.
+    ///
+    /// - Parameters:
+    ///   - text: The text to display in the popover when there is no warning.
+    ///   - warningIsShown: A binding that determines whether the warning state is active.
+    public init(
+        text: String,
+        warningIsShown: Bool
+    ) {
+        self.warningIsShown = warningIsShown
+        
+        if warningIsShown {
+            textWhenWarning = text; textWhenNormal = ""
+        
+        } else { textWhenNormal = text; textWhenWarning = "" }
     }
 }
