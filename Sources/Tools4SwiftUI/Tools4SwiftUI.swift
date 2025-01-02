@@ -4,6 +4,8 @@
 //
 //  Created by Giuseppe Rocco on 31/12/24.
 
+@_exported import SwiftUI
+
 import AppKit
 
 import UniformTypeIdentifiers
