@@ -21,7 +21,7 @@ Tools4SwiftUI includes the following components:
 - **`ComplexPicker`**: A flexible picker for selecting heterogeneous items with dynamic filtering and customizable labels.
 - **`ComplexStepper`**: A stepper with dynamic step sizes based on customizable ranges.
 - **`DictionaryList`**: A scrollable list of dictionary keys with customizable sorting and styling.
-- **`InfoWarningPopover`**: A button with a popover for displaying informational or warning messages.
+- **`InformativePopover`**: A button with a popover for displaying informational or warning messages.
 - **`SceneCommands`**: Custom macOS menu commands for window management and help menu integration.
 
 ### **Utilities**
@@ -108,10 +108,10 @@ DictionaryList(
 )
 ```
 
-### **InfoWarningPopover**
+### **InformativePopover**
 Show a popover for information or warnings:
 ```swift
-InfoWarningPopover(
+InformativePopover(
     textWhenNormal: "This is informational text.",
     textWhenWarning: "This is a warning.",
     warningIsShown: $isWarning
@@ -129,5 +129,3 @@ SceneCommands(websiteURL: URL(string: "https://example.com")!)
 ## Localization
 
 Most components in Tools4SwiftUI are compatible with SwiftUI's localization system. Use `LocalizedStringKey` for text to ensure easy translation.
-
----
