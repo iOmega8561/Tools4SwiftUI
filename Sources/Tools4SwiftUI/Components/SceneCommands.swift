@@ -5,6 +5,7 @@
 //  Created by Giuseppe Rocco on 11/11/24.
 //
 
+#if os(macOS)
 import SwiftUI
 
 /// `SceneCommands` is a custom set of app commands that enhances and customizes the macOS menu bar.
@@ -20,7 +21,6 @@ import SwiftUI
 ///
 /// - Note:
 ///   - The help menu items include customizable keyboard shortcuts.
-@available(macOS 13.0, *)
 public struct SceneCommands: Commands {
     
     /// The URL of the website to be linked in the help menu.
@@ -56,22 +56,12 @@ public struct SceneCommands: Commands {
         CommandGroup(replacing: .help) {
             
             Link(destination: websiteURL) {
-                Text(
-                    verbatim: .init(
-                        localized:"action-help-readme",
-                        bundle: .module
-                    )
-                )
+                Text(Tools4SwiftUI.localized("action-help-readme"))
             }
             .keyboardShortcut("/", modifiers: [.command, .control])
             
             Link(destination: websiteURL.appendingPathComponent("privacy.html")) {
-                Text(
-                    verbatim: .init(
-                        localized:"action-help-privacy",
-                        bundle: .module
-                    )
-                )
+                Text(Tools4SwiftUI.localized("action-help-privacy"))
             }
             .keyboardShortcut("/", modifiers: [.command, .option])
         }
@@ -84,3 +74,4 @@ public struct SceneCommands: Commands {
         self.websiteURL = websiteURL
     }
 }
+#endif

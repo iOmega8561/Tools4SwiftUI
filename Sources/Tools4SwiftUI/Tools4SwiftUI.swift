@@ -6,12 +6,19 @@
 
 @_exported import SwiftUI
 
+#if os(macOS)
 import AppKit
+#endif
 
 import UniformTypeIdentifiers
 
 @MainActor public enum Tools4SwiftUI {
-        
+    
+    static func localized(_ key: String.LocalizationValue) -> String {
+        String(localized: key, bundle: .module)
+    }
+    
+    #if os(macOS)
     /// Displays an error message to the user using an `NSAlert` object.
     ///
     /// This static method provides a convenient way to present errors to the user in a UI-friendly manner
@@ -29,8 +36,10 @@ import UniformTypeIdentifiers
         
         alert.alertStyle = style
         alert.informativeText = error.localizedDescription
-        alert.messageText = String(localized: "alert-title-error", bundle: .module)
-        alert.addButton(withTitle: "OK")
+        alert.messageText = Self.localized("alert-title-error")
+        alert.addButton(
+            withTitle: Self.localized("alert-button-dismiss")
+        )
         
         if let main = NSApp.mainWindow, let key = NSApp.keyWindow {
             
@@ -78,5 +87,5 @@ import UniformTypeIdentifiers
                         
         } else { return openPanel.runModal() == .OK ? openPanel.url:nil }
     }
-    
+    #endif
 }

@@ -50,6 +50,14 @@ public struct BootstrapTask: ViewModifier {
     /// helps ensure the task only executes once.
     @State private var stateHolder: StateHolder = .init()
     
+    #if !os(macOS)
+    /// Tracks whether an error has been encountered
+    ///
+    /// This state variable determines whether the async task has encountered an error and stores it until dismission
+    /// - Note: This is available only on platforms where `AppKit` is not available (everything but macOS)
+    @State private var currentError: Error? = nil
+    #endif
+    
     /// The body of the view modifier, which applies the `task` modifier to execute the asynchronous handler.
     ///
     /// The `task` modifier initiates the asynchronous task with a `.userInitiated` priority. Inside the task,
@@ -73,8 +81,28 @@ public struct BootstrapTask: ViewModifier {
                 do {
                     try await handler()
                     
-                } catch { Tools4SwiftUI.displayError(error) }
+                } catch {
+                    #if !os(macOS)
+                    currentError = error
+                    #else
+                    Tools4SwiftUI.displayError(error)
+                    #endif
+                }
             }
+        
+            #if !os(macOS)
+            .alert(
+                Tools4SwiftUI.localized("alert-title-error"),
+                isPresented: .constant(currentError != nil)
+            ) {
+                Button(Tools4SwiftUI.localized("alert-button-dismiss")) {
+                    currentError = nil
+                }
+            } message: {
+                Text(currentError?.localizedDescription ??
+                    Tools4SwiftUI.localized("alert-message-default"))
+            }
+            #endif
     }
     
     public init(
