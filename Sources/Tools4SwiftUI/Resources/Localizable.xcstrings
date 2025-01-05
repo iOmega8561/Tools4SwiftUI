@@ -42,9 +42,14 @@
             "state" : "translated",
             "value" : "OK"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "OK"
+          }
         }
-      },
-      "shouldTranslate" : false
+      }
     },
     "alert-message-default" : {
       "localizations" : {
