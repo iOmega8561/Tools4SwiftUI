@@ -53,6 +53,14 @@ public struct AsyncButton<Label: View>: View {
     /// This state variable determines whether the progress indicator should be displayed while the task is running.
     @State private var showProgressView = false
 
+    #if !os(macOS)
+    /// Tracks whether an error has been encountered
+    ///
+    /// This state variable determines whether the async task has encountered an error and stores it until dismission
+    /// - Note: This is available only on platforms where `AppKit` is not available (everything but macOS)
+    @State private var currentError: Error? = nil
+    #endif
+    
     /// The body of the `AsyncButton`, defining its appearance and behavior.
     ///
     /// This view includes:
@@ -76,6 +84,20 @@ public struct AsyncButton<Label: View>: View {
                 }
         }
         .disabled(isDisabled)
+        
+        #if !os(macOS)
+        .alert(
+            Tools4SwiftUI.localized("alert-title-error"),
+            isPresented: .constant(currentError != nil)
+        ) {
+            Button(Tools4SwiftUI.localized("alert-button-dismiss")) {
+                currentError = nil
+            }
+        } message: {
+            Text(currentError?.localizedDescription ??
+                 Tools4SwiftUI.localized("alert-message-default"))
+        }
+        #endif
     }
     
     /// Handles the button's action by managing its state and executing the asynchronous task.
@@ -84,6 +106,9 @@ public struct AsyncButton<Label: View>: View {
     /// - Disables the button if `disableWhenRunning` is `true`.
     /// - Displays a progress view while the task is running.
     /// - Resets the button's state after the task completes or fails.
+    ///
+    /// - Note: Where `AppKit` is not available (everything but macOS), instead of using `Tools4SwiftUI.displayError`,
+    /// The state variable `currentError` is used since it allows to trigger a native SwiftUI alert on the async button.
     private func buttonHandler() {
         isDisabled = disableWhenRunning
     
@@ -93,7 +118,13 @@ public struct AsyncButton<Label: View>: View {
             do {
                 try await action()
                 
-            } catch { Tools4SwiftUI.displayError(error) }
+            } catch {
+                #if !os(macOS)
+                currentError = error
+                #else
+                Tools4SwiftUI.displayError(error)
+                #endif
+            }
 
             isDisabled = false; showProgressView = false
         }

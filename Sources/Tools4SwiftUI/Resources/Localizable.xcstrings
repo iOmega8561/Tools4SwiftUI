@@ -35,6 +35,33 @@
         }
       }
     },
+    "alert-button-dismiss" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "OK"
+          }
+        }
+      },
+      "shouldTranslate" : false
+    },
+    "alert-message-default" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "An error has occurred"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Si è verificato un errore"
+          }
+        }
+      }
+    },
     "alert-title-error" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -53,7 +80,20 @@
       }
     },
     "window-main-title" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Main window"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Finestra principale"
+          }
+        }
+      }
     }
   },
   "version" : "1.0"
