@@ -17,15 +17,15 @@ import SwiftUI
 /// track the task's completion state, ensuring it is only executed once.
 public struct BootstrapTask: ViewModifier {
     
-    /// A private class to hold and observe the task’s completion state.
+    /// A private class to hold the task’s completion state.
     ///
-    /// `StateHolder` is an `@Observable` class that tracks whether the task has been completed.
-    /// By making it `Observable`, SwiftUI automatically updates the view when the `isDone`
-    /// property changes, though in this context, it's primarily used to prevent re-execution.
+    /// `StateHolder` is a class that tracks whether the task has been completed.
+    /// It doesn't need to be `Observable`, since SwiftUI will not update the view when the `isDone`
+    /// property changes. In this context, it's primarily used to prevent re-execution.
     ///
     /// - Properties:
     ///   - `isDone`: A private(set) Boolean that tracks whether the task has been completed.
-    private class StateHolder: Observation.Observable {
+    private class StateManager {
         
         /// A Boolean indicating whether the task has already completed.
         ///
@@ -43,12 +43,12 @@ public struct BootstrapTask: ViewModifier {
     /// is handled by displaying an alert through `TesseractError`.
     private let handler: () async throws -> Void
     
-    /// An instance of `StateHolder` to track whether the task has already run.
+    /// An instance of `StateManager` to track whether the task has already run.
     ///
-    /// Using `@State` ensures that `stateHolder` is unique to this view instance, and SwiftUI
+    /// Using `@State` ensures that `stateManager` is unique to this view instance, and SwiftUI
     /// retains its state across re-renders. By tracking the task's completion state, `stateHolder`
     /// helps ensure the task only executes once.
-    @State private var stateHolder: StateHolder = .init()
+    @State private var stateManager: StateManager = .init()
     
     #if !os(macOS)
     /// Tracks whether an error has been encountered
@@ -74,9 +74,9 @@ public struct BootstrapTask: ViewModifier {
         content
             .task(priority: .userInitiated) { @MainActor in
                 
-                guard !stateHolder.isDone else { return }
+                guard !stateManager.isDone else { return }
                 
-                stateHolder.setDone()
+                stateManager.setDone()
                 
                 do {
                     try await handler()
