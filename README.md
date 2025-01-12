@@ -23,6 +23,9 @@ Tools4SwiftUI includes the following components:
 - **`DictionaryList`**: A scrollable list of dictionary keys with customizable sorting and styling.
 - **`InformativePopover`**: A button with a popover for displaying informational or warning messages.
 - **`SceneCommands`**: Custom macOS menu commands for window management and help menu integration.
+- **`WindowFullScreenPresentationOptions`**: A macOS-specific view modifier that customizes the behavior of a window in full-screen mode and manages tabbing. This component provides:
+  - Full-screen presentation customization using `NSApplication.PresentationOptions`.
+  - Tabbing mode configuration with `NSWindow.TabbingMode`.
 
 ### **Utilities**
 - Support for asynchronous operations in UI components.
@@ -122,6 +125,17 @@ InformativePopover(
 Customize macOS menu commands:
 ```swift
 SceneCommands(websiteURL: URL(string: "https://example.com")!)
+```
+
+#### **WindowFullScreenPresentationOptions**
+Customize the behavior of a window in full-screen mode:
+```swift
+struct ContentView: View {
+    var body: some View {
+        Text("Hello, World!")
+            .windowFullScreenPresentationOptions([.autoHideToolbar, .fullScreen], tabbingMode: .preferred)
+    }
+}
 ```
 
 ---
