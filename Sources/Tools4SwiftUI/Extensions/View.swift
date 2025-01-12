@@ -7,13 +7,13 @@
 
 import SwiftUI
 
-extension View {
+public extension View {
     
     /// Using this method we can simply call `.bootstrapTask` as a modifier on our Views
     /// - Parameter handler: The asynchronous closure to be executed only once
     ///
     /// - SeeAlso: `BootstrapTask`
-    public func bootstrapTask(handler: @escaping () async throws -> Void) -> some View {
+    func bootstrapTask(handler: @escaping () async throws -> Void) -> some View {
         return self.modifier(BootstrapTask(handler: handler))
     }
     
@@ -42,7 +42,7 @@ extension View {
     /// For more options, refer to the `NSApplication.PresentationOptions` documentation.
     ///
     /// - Returns: A view modified to apply the specified full-screen presentation options.
-    public func windowFullScreenPresentationOptions(_ options: NSApplication.PresentationOptions) -> some View {
+    func windowFullScreenPresentationOptions(_ options: NSApplication.PresentationOptions) -> some View {
         self.modifier(WindowFullScreenPresentationOptions(options))
     }
     
@@ -68,7 +68,7 @@ extension View {
     /// ```
     ///
     /// - Returns: A view modified to apply the specified full-screen presentation options and tabbing mode.
-    public func windowFullScreenPresentationOptions(_ options: NSApplication.PresentationOptions, tabbingMode: NSWindow.TabbingMode) -> some View {
+    func windowFullScreenPresentationOptions(_ options: NSApplication.PresentationOptions, tabbingMode: NSWindow.TabbingMode) -> some View {
         self.modifier(WindowFullScreenPresentationOptions(options, tabbingMode: tabbingMode))
     }
     #endif

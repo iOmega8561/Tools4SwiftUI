@@ -56,12 +56,12 @@ public struct SceneCommands: Commands {
         CommandGroup(replacing: .help) {
             
             Link(destination: websiteURL) {
-                Text(Tools4SwiftUI.localized("action-help-readme"))
+                Text(verbatim: .module("action-help-readme"))
             }
             .keyboardShortcut("/", modifiers: [.command, .control])
             
             Link(destination: websiteURL.appendingPathComponent("privacy.html")) {
-                Text(Tools4SwiftUI.localized("action-help-privacy"))
+                Text(verbatim: .module("action-help-privacy"))
             }
             .keyboardShortcut("/", modifiers: [.command, .option])
         }

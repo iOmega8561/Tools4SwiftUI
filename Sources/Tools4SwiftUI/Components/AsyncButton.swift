@@ -122,7 +122,7 @@ public struct AsyncButton<Label: View>: View {
                 #if !os(macOS)
                 currentError = error
                 #else
-                Tools4SwiftUI.displayError(error)
+                NSAlert.displayError(error)
                 #endif
             }
 

@@ -85,7 +85,7 @@ public struct BootstrapTask: ViewModifier {
                     #if !os(macOS)
                     currentError = error
                     #else
-                    Tools4SwiftUI.displayError(error)
+                    NSAlert.displayError(error)
                     #endif
                 }
             }
