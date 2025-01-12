@@ -43,6 +43,11 @@ public struct AsyncFileImporter: ViewModifier {
                     isExecuting = true
                     
                     Task(priority: .userInitiated) { @MainActor in
+                        
+                        files.forEach { file in
+                            _ = file.startAccessingSecurityScopedResource()
+                        }
+                        
                         do {
                             try await completionHandler(files)
                         } catch {
@@ -51,6 +56,10 @@ public struct AsyncFileImporter: ViewModifier {
                             #else
                             NSAlert.displayError(error)
                             #endif
+                        }
+                        
+                        files.forEach { file in
+                            file.stopAccessingSecurityScopedResource()
                         }
                         
                         isExecuting = false
