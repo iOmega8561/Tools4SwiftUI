@@ -84,19 +84,8 @@ public struct AsyncButton<Label: View>: View {
                 }
         }
         .disabled(isDisabled)
-        
         #if !os(macOS)
-        .alert(
-            Tools4SwiftUI.localized("alert-title-error"),
-            isPresented: .constant(currentError != nil)
-        ) {
-            Button(Tools4SwiftUI.localized("alert-button-dismiss")) {
-                currentError = nil
-            }
-        } message: {
-            Text(currentError?.localizedDescription ??
-                 Tools4SwiftUI.localized("alert-message-default"))
-        }
+        .errorAlert(currentError: $currentError)
         #endif
     }
     

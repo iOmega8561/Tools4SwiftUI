@@ -17,6 +17,17 @@ public extension View {
         return self.modifier(BootstrapTask(handler: handler))
     }
     
+    /// Adds an error alert to the view, displaying a message whenever the provided error is non-`nil`.
+    ///
+    /// This method uses the `ErrorAlert` view modifier to present an alert with the localized description
+    /// of the provided error. A dismiss button clears the error and hides the alert.
+    ///
+    /// - Parameter currentError: A binding to an optional `Error` that triggers the alert when non-`nil`.
+    /// - Returns: A view modified to present an error alert.
+    func errorAlert(currentError: Binding<Error?>) -> some View {
+        return self.modifier(ErrorAlert(currentError: currentError))
+    }
+    
     #if os(macOS)
     /// Applies full-screen presentation options to the window containing the view on macOS.
     ///

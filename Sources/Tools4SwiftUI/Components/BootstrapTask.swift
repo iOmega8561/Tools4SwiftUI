@@ -91,23 +91,11 @@ public struct BootstrapTask: ViewModifier {
             }
         
             #if !os(macOS)
-            .alert(
-                Tools4SwiftUI.localized("alert-title-error"),
-                isPresented: .constant(currentError != nil)
-            ) {
-                Button(Tools4SwiftUI.localized("alert-button-dismiss")) {
-                    currentError = nil
-                }
-            } message: {
-                Text(currentError?.localizedDescription ??
-                    Tools4SwiftUI.localized("alert-message-default"))
-            }
+            .errorAlert(currentError: $currentError)
             #endif
     }
     
-    public init(
-    
-        handler: @escaping () async throws -> Void
-    
-    ) { self.handler = handler }
+    public init(handler: @escaping () async throws -> Void) {
+        self.handler = handler
+    }
 }
