@@ -11,13 +11,52 @@ import UniformTypeIdentifiers
 
 public extension View {
     
+    /// Attaches a file importer to the view, allowing users to select files asynchronously.
+    ///
+    /// This version supports specifying multiple allowed content types for the file importer.
+    ///
+    /// - Parameters:
+    ///   - isPresented: A binding to a `Bool` that determines when the file importer is presented.
+    ///   - allowedContentTypes: An array of `UTType` values representing the allowed content types.
+    ///   - allowsMultipleSelection: A Boolean value indicating whether multiple files can be selected. Defaults to `false`.
+    ///   - completionHandler: An asynchronous closure that processes the selected files.
+    /// - Returns: A modified view that presents a file importer when `isPresented` is `true`.
     func asyncFileImporter(
         isPresented: Binding<Bool>,
         allowedContentTypes: [UTType],
         allowsMultipleSelection: Bool = false,
         completionHandler: @escaping ([URL]) async throws -> Void
     ) -> some View {
-        return self.modifier(AsyncFileImporter(isPresented: isPresented, allowedContentTypes: allowedContentTypes, allowsMultipleSelection: allowsMultipleSelection, completionHandler: completionHandler))
+        return self.modifier(AsyncFileImporter(
+            isPresented: isPresented,
+            allowedContentTypes: allowedContentTypes,
+            allowsMultipleSelection: allowsMultipleSelection,
+            completionHandler: completionHandler
+        ))
+    }
+    
+    /// Attaches a file importer to the view, allowing users to select files asynchronously.
+    ///
+    /// This version supports specifying a single allowed content type for the file importer.
+    ///
+    /// - Parameters:
+    ///   - isPresented: A binding to a `Bool` that determines when the file importer is presented.
+    ///   - allowedContentType: A single `UTType` value representing the allowed content type.
+    ///   - allowsMultipleSelection: A Boolean value indicating whether multiple files can be selected. Defaults to `false`.
+    ///   - completionHandler: An asynchronous closure that processes the selected files.
+    /// - Returns: A modified view that presents a file importer when `isPresented` is `true`.
+    func asyncFileImporter(
+        isPresented: Binding<Bool>,
+        allowedContentType: UTType,
+        allowsMultipleSelection: Bool = false,
+        completionHandler: @escaping ([URL]) async throws -> Void
+    ) -> some View {
+        return self.modifier(AsyncFileImporter(
+            isPresented: isPresented,
+            allowedContentType: allowedContentType,
+            allowsMultipleSelection: allowsMultipleSelection,
+            completionHandler: completionHandler
+        ))
     }
     
     /// Using this method we can simply call `.bootstrapTask` as a modifier on our Views
