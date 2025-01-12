@@ -127,7 +127,7 @@ Customize macOS menu commands:
 SceneCommands(websiteURL: URL(string: "https://example.com")!)
 ```
 
-#### **WindowFullScreenPresentationOptions**
+### **WindowFullScreenPresentationOptions**
 Customize the behavior of a window in full-screen mode:
 ```swift
 struct ContentView: View {
