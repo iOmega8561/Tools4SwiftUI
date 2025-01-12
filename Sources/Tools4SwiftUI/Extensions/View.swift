@@ -53,34 +53,6 @@ public extension View {
     }
     
     #if os(macOS)
-    /// Applies full-screen presentation options to the window containing the view on macOS.
-    ///
-    /// Use this modifier to customize how the window behaves when entering full-screen mode. You can specify presentation options such as
-    /// automatically hiding the toolbar or setting the full-screen appearance of the window.
-    ///
-    /// - Parameter options: A set of `NSApplication.PresentationOptions` that define the window's behavior in full-screen mode.
-    ///
-    /// Example usage:
-    /// ```swift
-    /// struct ContentView: View {
-    ///     var body: some View {
-    ///         Text("Hello, World!")
-    ///             .windowFullScreenPresentationOptions([.autoHideToolbar, .fullScreen])
-    ///     }
-    /// }
-    /// ```
-    ///
-    /// ### Supported Options
-    /// - `.autoHideToolbar`: Hides the toolbar when the window enters full-screen mode.
-    /// - `.fullScreen`: Ensures the window uses the full-screen space.
-    ///
-    /// For more options, refer to the `NSApplication.PresentationOptions` documentation.
-    ///
-    /// - Returns: A view modified to apply the specified full-screen presentation options.
-    func windowFullScreenPresentationOptions(_ options: NSApplication.PresentationOptions) -> some View {
-        self.modifier(WindowFullScreenPresentationOptions(options))
-    }
-    
     /// Applies full-screen presentation options and a tabbing mode to the window containing the view on macOS.
     ///
     /// This modifier allows you to customize how the window behaves when entering full-screen mode and control the window's tabbing behavior.
@@ -97,14 +69,14 @@ public extension View {
     /// struct ContentView: View {
     ///     var body: some View {
     ///         Text("Hello, World!")
-    ///             .windowFullScreenPresentationOptions([.autoHideToolbar, .fullScreen], tabbingMode: .preferred)
+    ///             .windowPresentation([.autoHideToolbar, .fullScreen], tabbingMode: .preferred)
     ///     }
     /// }
     /// ```
     ///
     /// - Returns: A view modified to apply the specified full-screen presentation options and tabbing mode.
-    func windowFullScreenPresentationOptions(_ options: NSApplication.PresentationOptions, tabbingMode: NSWindow.TabbingMode) -> some View {
-        self.modifier(WindowFullScreenPresentationOptions(options, tabbingMode: tabbingMode))
+    func windowPresentation(_ fullScreenOptions: NSApplication.PresentationOptions, tabbingMode: NSWindow.TabbingMode = .automatic) -> some View {
+        self.modifier(WindowPresentation(fullScreenOptions, tabbingMode: tabbingMode))
     }
     #endif
 }

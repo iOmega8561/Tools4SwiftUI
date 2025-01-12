@@ -21,11 +21,11 @@ Here are some of the highlights:
 
 - **Run asynchronous tasks:** Simplify task management with components like `BootstrapTask` and `AsyncButton`.
 - **Create modern UI elements:** Use components like `BubbleContainer`, `ComplexPicker`, and `ComplexStepper` for visually appealing and interactive designs.
-- **Enhance macOS apps:** Add powerful features like `SceneCommands` and `WindowFullScreenPresentationOptions` for macOS-specific customization.
+- **Enhance macOS apps:** Add powerful features like `SceneCommands` and `WindowPresentation` for macOS-specific customization.
 - **Localization:** Most components in Tools4SwiftUI are compatible with SwiftUI's localization system. `LocalizedStringKey` will get you covered.
 
 > [!TIP]
-> If you're a **macOS developer** targeting older OS versions, Tools4SwiftUI might be the perfect fit! The package **backports** newer SwiftUI features to macOS 14.xx Sonoma by wrapping AppKit functionality in **View** or **ViewModifier** structs. For instance, `WindowFullScreenPresentationOptions` mimics the behavior of `WindowToolbarFullScreenVisibility` introduced in macOS 15.xx.
+> If you're a **macOS developer** targeting older OS versions, Tools4SwiftUI might be the perfect fit! The package **backports** newer SwiftUI features to macOS 14.xx Sonoma by wrapping AppKit functionality in **View** or **ViewModifier** structs. For instance, `WindowPresentation` mimics the behavior of `WindowToolbarFullScreenVisibility` introduced in macOS 15.xx.
 
 ---
 

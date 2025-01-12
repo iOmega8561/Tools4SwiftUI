@@ -1,5 +1,5 @@
 //
-//  WindowFullScreenPresentationOptions.swift
+//  WindowPresentation.swift
 //  Tools4SwiftUI
 //
 //  Created by Giuseppe Rocco on 12/01/25.
@@ -8,7 +8,7 @@
 #if os(macOS)
 /// A view modifier that customizes the behavior of a window when entering full-screen mode and manages the tabbing mode on macOS.
 ///
-/// Use `WindowFullScreenPresentationOptions` to define how a macOS window behaves when transitioning to full-screen mode by setting specific
+/// Use `WindowPresentation` to define how a macOS window behaves when transitioning to full-screen mode by setting specific
 /// `NSApplication.PresentationOptions` and controlling the `NSWindow.TabbingMode`.
 ///
 /// This modifier is macOS-specific and leverages AppKit APIs for precise control over window behaviors.
@@ -23,18 +23,18 @@
 /// struct ContentView: View {
 ///     var body: some View {
 ///         Text("Hello, World!")
-///             .modifier(WindowFullScreenPresentationOptions([.autoHideToolbar, .fullScreen]))
+///             .modifier(WindowPresentation([.autoHideToolbar, .fullScreen]))
 ///     }
 /// }
 /// ```
-public struct WindowFullScreenPresentationOptions: ViewModifier {
+public struct WindowPresentation: ViewModifier {
 
     // MARK: - Nested Types
 
     /// A private class that implements `NSWindowDelegate` to customize window behavior during full-screen transitions.
     private final class WindowDelegate: NSObject, NSWindowDelegate {
 
-        private let presentationOptions: NSApplication.PresentationOptions
+        private let fullScreenPresentationOptions: NSApplication.PresentationOptions
 
         /// Called by the window when determining full-screen presentation options.
         ///
@@ -43,14 +43,14 @@ public struct WindowFullScreenPresentationOptions: ViewModifier {
         ///   - proposedOptions: The default full-screen presentation options.
         /// - Returns: The custom presentation options provided during initialization.
         func window(_ window: NSWindow, willUseFullScreenPresentationOptions proposedOptions: NSApplication.PresentationOptions = []) -> NSApplication.PresentationOptions {
-            return presentationOptions
+            return fullScreenPresentationOptions
         }
 
         /// Initializes a `WindowDelegate` with the specified presentation options.
         ///
         /// - Parameter options: The full-screen presentation options to use.
-        fileprivate init(_ options: NSApplication.PresentationOptions) {
-            self.presentationOptions = options
+        fileprivate init(_ fullScreenOptions: NSApplication.PresentationOptions) {
+            self.fullScreenPresentationOptions = fullScreenOptions
         }
     }
 
@@ -79,21 +79,21 @@ public struct WindowFullScreenPresentationOptions: ViewModifier {
     
     // MARK: - Initializers
 
-    /// Creates a `WindowFullScreenPresentationOptions` modifier with the specified full-screen presentation options.
+    /// Creates a `WindowPresentation` modifier with the specified full-screen presentation options.
     ///
     /// - Parameter options: A set of presentation options that define the behavior of a window in full-screen mode.
-    public init(_ options: NSApplication.PresentationOptions) {
-        self.windowDelegate = WindowDelegate(options)
+    public init(_ fullScreenOptions: NSApplication.PresentationOptions) {
+        self.windowDelegate = WindowDelegate(fullScreenOptions)
         self.tabbingMode = .automatic
     }
 
-    /// Creates a `WindowFullScreenPresentationOptions` modifier with the specified full-screen presentation options and tabbing mode.
+    /// Creates a `WindowPresentation` modifier with the specified full-screen presentation options and tabbing mode.
     ///
     /// - Parameters:
     ///   - options: A set of presentation options that define the behavior of a window in full-screen mode.
     ///   - tabbingMode: The tabbing mode for the window. Defaults to `.automatic`.
-    public init(_ options: NSApplication.PresentationOptions, tabbingMode: NSWindow.TabbingMode) {
-        self.windowDelegate = WindowDelegate(options)
+    public init(_ fullScreenOptions: NSApplication.PresentationOptions, tabbingMode: NSWindow.TabbingMode) {
+        self.windowDelegate = WindowDelegate(fullScreenOptions)
         self.tabbingMode = tabbingMode
     }
 }
