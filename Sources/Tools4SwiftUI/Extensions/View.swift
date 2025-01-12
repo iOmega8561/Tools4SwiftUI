@@ -7,7 +7,18 @@
 
 import SwiftUI
 
+import UniformTypeIdentifiers
+
 public extension View {
+    
+    func asyncFileImporter(
+        isPresented: Binding<Bool>,
+        allowedContentTypes: [UTType],
+        allowsMultipleSelection: Bool = false,
+        completionHandler: @escaping ([URL]) async throws -> Void
+    ) -> some View {
+        return self.modifier(AsyncFileImporter(isPresented: isPresented, allowedContentTypes: allowedContentTypes, allowsMultipleSelection: allowsMultipleSelection, completionHandler: completionHandler))
+    }
     
     /// Using this method we can simply call `.bootstrapTask` as a modifier on our Views
     /// - Parameter handler: The asynchronous closure to be executed only once
