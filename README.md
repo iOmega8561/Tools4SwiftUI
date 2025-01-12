@@ -10,27 +10,65 @@
   
 </div>
 
+---
+
 ## Features
 
-Tools4SwiftUI includes the following components:
+Tools4SwiftUI provides a powerful suite of components and utilities designed to simplify SwiftUI development. With a focus on reusability and flexibility, these tools are perfect for building modern, feature-rich applications.
 
-### **Components**
-- **`BootstrapTask`**: A view modifier to run an asynchronous task only once per view lifecycle.
-- **`AsyncButton`**: A button that executes asynchronous tasks while handling its disabled state and showing a progress indicator.
-- **`BubbleContainer`**: A stylish container with rounded corners and a customizable label for grouping related content.
-- **`ComplexPicker`**: A flexible picker for selecting heterogeneous items with dynamic filtering and customizable labels.
-- **`ComplexStepper`**: A stepper with dynamic step sizes based on customizable ranges.
-- **`DictionaryList`**: A scrollable list of dictionary keys with customizable sorting and styling.
-- **`InformativePopover`**: A button with a popover for displaying informational or warning messages.
-- **`SceneCommands`**: Custom macOS menu commands for window management and help menu integration.
-- **`WindowFullScreenPresentationOptions`**: A macOS-specific view modifier that customizes the behavior of a window in full-screen mode and manages tabbing. This component provides:
-  - Full-screen presentation customization using `NSApplication.PresentationOptions`.
-  - Tabbing mode configuration with `NSWindow.TabbingMode`.
+### **Just a Taste**
+Here are some of the highlights:
 
-### **Utilities**
-- Support for asynchronous operations in UI components.
-- Localization-ready components using `LocalizedStringKey`.
-- Flexible customization with closures for rendering content and handling actions.
+- **Run asynchronous tasks:** Simplify task management with components like `BootstrapTask` and `AsyncButton`.
+- **Create modern UI elements:** Use components like `BubbleContainer`, `ComplexPicker`, and `ComplexStepper` for visually appealing and interactive designs.
+- **Enhance macOS apps:** Add powerful features like `SceneCommands` and `WindowFullScreenPresentationOptions` for macOS-specific customization.
+- **Localization:** Most components in Tools4SwiftUI are compatible with SwiftUI's localization system. `LocalizedStringKey` will get you covered.
+
+> [!TIP]
+> If you're a **macOS developer** targeting older OS versions, Tools4SwiftUI might be the perfect fit! The package **backports** newer SwiftUI features to macOS 14.xx Sonoma by wrapping AppKit functionality in **View** or **ViewModifier** structs. For instance, `WindowFullScreenPresentationOptions` mimics the behavior of `WindowToolbarFullScreenVisibility` introduced in macOS 15.xx.
+
+---
+
+## Example Snippet
+
+Here's an example showcasing advanced functionality using `AsyncFileButton` to integrate macOS file selection with asynchronous processing:
+
+```swift
+import Tools4SwiftUI
+import UniformTypeIdentifiers
+
+struct ContentView: View {
+    var body: some View {
+
+        AsyncFileButton("Select a File", allowedContentType: .plainText) { fileURL in
+
+            print("Processing file: \(fileURL.path)")
+
+            // Perform your async task with the selected file
+            try await processFile(fileURL)
+        }
+        .padding()
+    }
+
+    func processFile(_ url: URL) async throws {
+        // Simulate async processing
+        await Task.sleep(1_000_000_000)
+        print("File processed successfully: \(url.lastPathComponent)")
+    }
+}
+```
+
+---
+
+## Explore the Source Code
+
+Each component in Tools4SwiftUI is thoroughly documented in the source code. Check out the inline documentation to:
+
+- Learn about each component's purpose and functionality.
+- Explore detailed examples and usage guidelines.
+- Discover customization options for your projects.
+
+You can browse the source code directly to discover what this awesome package reserves for you!
 
 ---
 
@@ -48,98 +86,6 @@ Add the package to your Xcode project:
 
 ---
 
-## Usage
+## Why Tools4SwiftUI?
 
-### **BootstrapTask**
-Run an asynchronous task once per view lifecycle:
-```swift
-MyView()
-    .modifier(BootstrapTask {
-        // Your async task here
-    })
-```
-
-### **AsyncButton**
-Create a button that executes an asynchronous task:
-```swift
-AsyncButton(action: { await performTask() }) {
-    Text("Submit")
-}
-```
-
-### **BubbleContainer**
-Group related content with a labeled container:
-```swift
-BubbleContainer("Example Label") {
-    Text("This is inside the bubble.")
-}
-```
-
-### **ComplexPicker**
-Select items from a heterogeneous collection:
-```swift
-ComplexPicker(
-    array: myArray,
-    value: $selectedItem,
-    label: { Text($0.name) }
-)
-```
-
-### **ComplexStepper**
-Define a stepper with dynamic step sizes:
-```swift
-ComplexStepper(
-    value: currentValue,
-    steps: [
-        (0..<10, 1),
-        (10..<100, 10)
-    ],
-    action: { step in adjustValue(by: step) }
-) {
-    Text("Adjust Value")
-}
-```
-
-### **DictionaryList**
-Render and select dictionary keys in a scrollable list:
-```swift
-DictionaryList(
-    myDictionary,
-    selection: $selectedKey,
-    content: { Text($0) },
-    sortedBy: { $0.localizedCaseInsensitiveCompare($1) == .orderedAscending }
-)
-```
-
-### **InformativePopover**
-Show a popover for information or warnings:
-```swift
-InformativePopover(
-    textWhenNormal: "This is informational text.",
-    textWhenWarning: "This is a warning.",
-    warningIsShown: $isWarning
-)
-```
-
-### **SceneCommands**
-Customize macOS menu commands:
-```swift
-SceneCommands(websiteURL: URL(string: "https://example.com")!)
-```
-
-### **WindowFullScreenPresentationOptions**
-Customize the behavior of a window in full-screen mode:
-```swift
-struct ContentView: View {
-    var body: some View {
-        Text("Hello, World!")
-            .windowFullScreenPresentationOptions([.autoHideToolbar, .fullScreen], tabbingMode: .preferred)
-    }
-}
-```
-
----
-
-## Localization
-
-Most components in Tools4SwiftUI are compatible with SwiftUI's localization system. Use `LocalizedStringKey` for text to ensure easy translation.
+Whether you're looking for convenience, customization, or just a quicker way to build modern SwiftUI apps, Tools4SwiftUI has you covered. With detailed documentation and easy integration, you can get started right away.
