@@ -5,8 +5,6 @@
 //  Created by Giuseppe Rocco on 16/11/24.
 //
 
-import SwiftUI
-
 /// `InformativePopover` is a reusable popover component that displays informational or warning messages.
 ///
 /// This view provides a button that toggles a popover when tapped. The button dynamically adjusts its icon and style

@@ -5,8 +5,6 @@
 //  Created by Giuseppe Rocco on 16/11/24.
 //
 
-import SwiftUI
-
 /// `ComplexStepper` is a customizable stepper control with dynamic step sizes based on value ranges.
 ///
 /// This view provides a `Stepper` component that adjusts its increment and decrement steps dynamically

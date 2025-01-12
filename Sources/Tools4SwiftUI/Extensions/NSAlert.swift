@@ -6,8 +6,6 @@
 //
 
 #if os(macOS)
-import AppKit
-
 public extension NSAlert {
     
     /// Displays an error message to the user using an `NSAlert` object.

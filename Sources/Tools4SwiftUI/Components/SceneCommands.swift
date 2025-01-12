@@ -6,8 +6,6 @@
 //
 
 #if os(macOS)
-import SwiftUI
-
 /// `SceneCommands` is a custom set of app commands that enhances and customizes the macOS menu bar.
 ///
 /// This struct defines a collection of commands for macOS applications, including custom actions for window management,

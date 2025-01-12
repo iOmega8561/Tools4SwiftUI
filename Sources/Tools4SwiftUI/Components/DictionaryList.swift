@@ -5,8 +5,6 @@
 //  Created by Giuseppe Rocco on 11/10/24.
 //
 
-import SwiftUI
-
 /// `DictionaryList` is a scrollable list view that displays keys from a dictionary, with customizable sorting and content.
 ///
 /// This view renders a list of keys from a dictionary and allows users to select an item. The selected item is highlighted,

@@ -6,7 +6,6 @@
 //
 
 #if os(macOS)
-import AppKit
 import UniformTypeIdentifiers
 
 public extension NSOpenPanel {
@@ -51,14 +50,14 @@ public extension NSOpenPanel {
     /// - See Also:
     ///   - `NSOpenPanel`
     ///   - `UTType` (Uniform Type Identifiers)
-    static func filePicker(_ allowedContent: UTType) async -> URL? {
+    static func filePicker(allowedContentTypes: [UTType]) async -> URL? {
         let openPanel = NSOpenPanel()
         
         openPanel.canChooseFiles = true
         openPanel.allowsMultipleSelection = false
         openPanel.canChooseDirectories = false
         openPanel.canCreateDirectories = false
-        openPanel.allowedContentTypes = [allowedContent]
+        openPanel.allowedContentTypes = allowedContentTypes
         
         if let main = NSApp.mainWindow, let key = NSApp.keyWindow {
             return await openPanel.beginSheetModal(

@@ -6,9 +6,6 @@
 //
 
 #if os(macOS)
-import AppKit
-import SwiftUI
-
 /// A view modifier that customizes the behavior of a window when entering full-screen mode and manages the tabbing mode on macOS.
 ///
 /// Use `WindowFullScreenPresentationOptions` to define how a macOS window behaves when transitioning to full-screen mode by setting specific

@@ -5,8 +5,6 @@
 //  Created by Giuseppe Rocco on 05/01/25.
 //
 
-import SwiftUI
-
 import UniformTypeIdentifiers
 
 public extension View {
@@ -30,30 +28,6 @@ public extension View {
         return self.modifier(AsyncFileImporter(
             isPresented: isPresented,
             allowedContentTypes: allowedContentTypes,
-            allowsMultipleSelection: allowsMultipleSelection,
-            completionHandler: completionHandler
-        ))
-    }
-    
-    /// Attaches a file importer to the view, allowing users to select files asynchronously.
-    ///
-    /// This version supports specifying a single allowed content type for the file importer.
-    ///
-    /// - Parameters:
-    ///   - isPresented: A binding to a `Bool` that determines when the file importer is presented.
-    ///   - allowedContentType: A single `UTType` value representing the allowed content type.
-    ///   - allowsMultipleSelection: A Boolean value indicating whether multiple files can be selected. Defaults to `false`.
-    ///   - completionHandler: An asynchronous closure that processes the selected files.
-    /// - Returns: A modified view that presents a file importer when `isPresented` is `true`.
-    func asyncFileImporter(
-        isPresented: Binding<Bool>,
-        allowedContentType: UTType,
-        allowsMultipleSelection: Bool = false,
-        completionHandler: @escaping ([URL]) async throws -> Void
-    ) -> some View {
-        return self.modifier(AsyncFileImporter(
-            isPresented: isPresented,
-            allowedContentType: allowedContentType,
             allowsMultipleSelection: allowsMultipleSelection,
             completionHandler: completionHandler
         ))

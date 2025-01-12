@@ -5,8 +5,6 @@
 //  Created by Giuseppe Rocco on 17/11/24.
 //
 
-import SwiftUI
-
 /// `ComplexPicker` is a flexible picker component for selecting an item from a heterogeneous collection.
 ///
 /// This view is designed to handle collections of heterogeneous types, allowing for highly customizable item

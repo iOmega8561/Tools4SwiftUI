@@ -5,8 +5,6 @@
 //  Created by Giuseppe Rocco on 12/01/25.
 //
 
-import SwiftUI
-
 import UniformTypeIdentifiers
 
 /// A view modifier that enables asynchronous file importing in a SwiftUI view.
@@ -161,25 +159,6 @@ public struct AsyncFileImporter: ViewModifier {
         completionHandler: @escaping ([URL]) async throws -> Void
     ) {
         self.allowedContentTypes = allowedContentTypes
-        self.completionHandler = completionHandler
-        self.allowsMultipleSelection = allowsMultipleSelection
-        _isPresented = isPresented
-    }
-    
-    /// Initializes the file importer modifier with a single allowed content type.
-    ///
-    /// - Parameters:
-    ///   - isPresented: A binding to a `Bool` that determines when the file importer is presented.
-    ///   - allowedContentType: A single `UTType` value representing the allowed content type for selection.
-    ///   - allowsMultipleSelection: A Boolean value indicating whether multiple file selection is allowed. Defaults to `false`.
-    ///   - completionHandler: An asynchronous closure that processes the selected files.
-    public init(
-        isPresented: Binding<Bool>,
-        allowedContentType: UTType,
-        allowsMultipleSelection: Bool = false,
-        completionHandler: @escaping ([URL]) async throws -> Void
-    ) {
-        self.allowedContentTypes = [allowedContentType]
         self.completionHandler = completionHandler
         self.allowsMultipleSelection = allowsMultipleSelection
         _isPresented = isPresented
