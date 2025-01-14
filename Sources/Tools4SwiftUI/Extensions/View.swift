@@ -78,5 +78,35 @@ public extension View {
     func windowPresentation(_ fullScreenOptions: NSApplication.PresentationOptions, tabbingMode: NSWindow.TabbingMode = .automatic) -> some View {
         self.modifier(WindowPresentation(fullScreenOptions, tabbingMode: tabbingMode))
     }
+    
+    /// Opens a new window independently, enabling multiple instances without relying on WindowGroup.
+    /// This extension is particularly useful for scenarios like managing virtual machines, where users may need
+    /// several independent console windows simultaneously.
+    ///
+    /// - Important: The `@discardableResult` attribute prevents warnings about unused return values.
+    ///
+    /// - Parameters:
+    ///   - title: The text to display as the window's title.
+    ///   - sender: The object instance initiating the action, typically provided as `self`.
+    ///   - styleMask: An optional parameter for customizing the window's style properties.
+    ///   - toolbarStyle: Specifies the appearance of the window's toolbar. Defaults to `.unifiedCompact`.
+    ///
+    /// - Returns: The newly created `NSWindow` instance.
+    @discardableResult
+    func openAsWindow(
+        title: String,
+        sender: Any?,
+        styleMask: NSWindow.StyleMask? = nil,
+        toolbarStyle: NSWindow.ToolbarStyle = .unifiedCompact
+    ) -> NSWindow {
+        let controller = NSHostingController(rootView: self)
+        let nsWindow = NSWindow(contentViewController: controller)
+        nsWindow.contentViewController = controller
+        nsWindow.title = title
+        nsWindow.makeKeyAndOrderFront(sender)
+        nsWindow.toolbarStyle = .unifiedCompact
+        if let styleMask { nsWindow.styleMask = styleMask }
+        return nsWindow
+    }
     #endif
 }
