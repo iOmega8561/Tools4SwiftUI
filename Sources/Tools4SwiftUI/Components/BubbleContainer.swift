@@ -56,7 +56,13 @@ public struct BubbleContainer<Content: View>: View {
             ZStack {
                 
                 Rectangle()
-                    .fill(.thinMaterial)
+                    #if os(iOS)
+                    .fill(Color(.systemGroupedBackground))
+                    #elseif os(macOS)
+                    .fill(Color.systemGroupedBackground)
+                    #else
+                    .fill(.background)
+                    #endif
                 
                 VStack {
                     content()
