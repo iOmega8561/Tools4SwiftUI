@@ -157,7 +157,7 @@ extension AsyncButton where Label == Text {
     ///   - disableWhenRunning: A boolean that dictates is the button should be disabled while the async task is running.
     ///   - action: A closure to be executed asynchronously.
     public init(
-        _ title: String,
+        verbatim title: String,
         role: ButtonRole? = nil,
         disableWhenRunning: Bool = true,
         action: @escaping () async throws -> Void
@@ -207,7 +207,7 @@ extension AsyncButton where Label == SwiftUI.Label<Text, Image> {
     ///   - disableWhenRunning: A boolean that dictates is the button should be disabled while the async task is running.
     ///   - action: A closure to be executed asynchronously.
     public init(
-        _ title: String,
+        verbatim title: String,
         systemImage: String,
         role: ButtonRole? = nil,
         disableWhenRunning: Bool = true,

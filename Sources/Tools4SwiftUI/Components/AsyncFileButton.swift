@@ -114,7 +114,7 @@ public struct AsyncFileButton<Label: View>: View {
 
 // MARK: - Convenience Initializers
 
-extension AsyncFileButton where Label == Text {
+public extension AsyncFileButton where Label == Text {
     
     /// Creates an `AsyncFileButton` with a `String` literal text label.
     ///
@@ -122,8 +122,8 @@ extension AsyncFileButton where Label == Text {
     ///   - title: A `String` literal representing the button text.
     ///   - allowedContentType: The file type allowed for selection, specified as a `UTType`.
     ///   - action: An asynchronous closure that processes the selected file.
-    public init(
-        _ title: String,
+    init(
+        verbatim title: String,
         allowedContentType: UTType,
         action: @escaping (URL) async throws -> Void
     ) {
@@ -141,7 +141,7 @@ extension AsyncFileButton where Label == Text {
     ///   - titleKey: A `LocalizedStringKey` that will allow to display a localized button label.
     ///   - allowedContentType: The file type allowed for selection, specified as a `UTType`.
     ///   - action: An asynchronous closure that processes the selected file.
-    public init(
+    init(
         _ titleKey: LocalizedStringKey,
         allowedContentType: UTType,
         action: @escaping (URL) async throws -> Void
@@ -155,7 +155,7 @@ extension AsyncFileButton where Label == Text {
     }
 }
 
-extension AsyncFileButton where Label == SwiftUI.Label<Text, Image> {
+public extension AsyncFileButton where Label == SwiftUI.Label<Text, Image> {
     
     /// Creates an `AsyncFileButton` with a SwifUI `Label` using a `String` literal as title.
     ///
@@ -164,8 +164,8 @@ extension AsyncFileButton where Label == SwiftUI.Label<Text, Image> {
     ///   - systemImage: A String that represents the name of a SFSymbol (System Image),
     ///   - allowedContentType: The file type allowed for selection, specified as a `UTType`.
     ///   - action: An asynchronous closure that processes the selected file.
-    public init(
-        _ title: String,
+    init(
+        verbatim title: String,
         systemImage: String,
         allowedContentType: UTType,
         action: @escaping (URL) async throws -> Void
@@ -185,7 +185,7 @@ extension AsyncFileButton where Label == SwiftUI.Label<Text, Image> {
     ///   - systemImage: A String that represents the name of a SFSymbol (System Image),
     ///   - allowedContentType: The file type allowed for selection, specified as a `UTType`.
     ///   - action: An asynchronous closure that processes the selected file.
-    public init(
+    init(
         _ titleKey: LocalizedStringKey,
         systemImage: String,
         allowedContentType: UTType,
