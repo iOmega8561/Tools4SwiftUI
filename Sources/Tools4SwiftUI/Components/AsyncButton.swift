@@ -162,3 +162,31 @@ extension AsyncButton where Label == Text {
         }
     }
 }
+
+extension AsyncButton where Label == SwiftUI.Label<Text, Image> {
+    
+    /// AsyncButton convenience initializer, Useful to create a new button mimicing the native Label behaviour
+    ///
+    /// - Parameters:
+    ///   - label: A line of text that will be displayed as the button label.
+    ///   - systemImage: A String that represents the name of a SFSymbol (System Image),
+    ///   - role: The role of the button.
+    ///   - disableWhenRunning: A boolean that dictates is the button should be disabled while the async task is running.
+    ///   - action: A closure to be executed asynchronously.
+    public init(
+        _ label: String,
+        systemImage: String,
+        role: ButtonRole? = nil,
+        disableWhenRunning: Bool = true,
+        action: @escaping () async throws -> Void
+    ) {
+        
+        self.init(
+            role: role,
+            disableWhenRunning: disableWhenRunning,
+            action: action
+        ) {
+            Label(LocalizedStringKey(label), systemImage: systemImage)
+        }
+    }
+}
