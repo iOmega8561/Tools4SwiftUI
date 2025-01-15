@@ -20,6 +20,8 @@
 ///   - `Label`: The view type used for the button's label.
 public struct AsyncButton<Label: View>: View {
     
+    // MARK: - Properties
+    
     /// The role of the button, defining its semantic meaning.
     ///
     /// This can be used to specify roles like `.destructive` or `.cancel`.
@@ -59,6 +61,8 @@ public struct AsyncButton<Label: View>: View {
     @State private var currentError: Error? = nil
     #endif
     
+    // MARK: - Body
+    
     /// The body of the `AsyncButton`, defining its appearance and behavior.
     ///
     /// This view includes:
@@ -86,6 +90,8 @@ public struct AsyncButton<Label: View>: View {
         .errorAlert(currentError: $currentError)
         #endif
     }
+    
+    // MARK: - Button handler function
     
     /// Handles the button's action by managing its state and executing the asynchronous task.
     ///
@@ -117,6 +123,8 @@ public struct AsyncButton<Label: View>: View {
         }
     }
     
+    // MARK: - Initializers
+    
     /// AsyncButton initializer
     ///
     /// - Parameters:
@@ -137,17 +145,19 @@ public struct AsyncButton<Label: View>: View {
     }
 }
 
+// MARK: - Convenience Initializers
+
 extension AsyncButton where Label == Text {
     
-    /// AsyncButton convenience initializer, Useful to create a new button using a simple string as label.
+    /// AsyncButton convenience initializer, Useful to create a new button using a simple `String` literal as label text.
     ///
     /// - Parameters:
-    ///   - label: A line of text that will be displayed as the button label.
+    ///   - title: A `String` literal that will be displayed as the button label.
     ///   - role: The role of the button.
     ///   - disableWhenRunning: A boolean that dictates is the button should be disabled while the async task is running.
     ///   - action: A closure to be executed asynchronously.
     public init(
-        _ label: String,
+        _ title: String,
         role: ButtonRole? = nil,
         disableWhenRunning: Bool = true,
         action: @escaping () async throws -> Void
@@ -158,23 +168,46 @@ extension AsyncButton where Label == Text {
             disableWhenRunning: disableWhenRunning,
             action: action
         ) {
-            Text(LocalizedStringKey(label))
+            Text(verbatim: title)
+        }
+    }
+    
+    /// AsyncButton convenience initializer, Useful to create a new button using a `LocalizedStringKey`
+    ///
+    /// - Parameters:
+    ///   - titleKey: A `LocalizedStringKey` that will allow to display a localized button label.
+    ///   - role: The role of the button.
+    ///   - disableWhenRunning: A boolean that dictates is the button should be disabled while the async task is running.
+    ///   - action: A closure to be executed asynchronously.
+    public init(
+        _ titleKey: LocalizedStringKey,
+        role: ButtonRole? = nil,
+        disableWhenRunning: Bool = true,
+        action: @escaping () async throws -> Void
+    ) {
+        
+        self.init(
+            role: role,
+            disableWhenRunning: disableWhenRunning,
+            action: action
+        ) {
+            Text(titleKey)
         }
     }
 }
 
 extension AsyncButton where Label == SwiftUI.Label<Text, Image> {
     
-    /// AsyncButton convenience initializer, Useful to create a new button mimicing the native Label behaviour
+    /// AsyncButton convenience initializer, Useful to create a new button mimicing the native `Label` behaviour
     ///
     /// - Parameters:
-    ///   - label: A line of text that will be displayed as the button label.
-    ///   - systemImage: A String that represents the name of a SFSymbol (System Image),
+    ///   - title: A `String` literal that will be displayed as the button label.
+    ///   - systemImage: A `String` literal that represents the name of a SFSymbol (System Image),
     ///   - role: The role of the button.
     ///   - disableWhenRunning: A boolean that dictates is the button should be disabled while the async task is running.
     ///   - action: A closure to be executed asynchronously.
     public init(
-        _ label: String,
+        _ title: String,
         systemImage: String,
         role: ButtonRole? = nil,
         disableWhenRunning: Bool = true,
@@ -186,7 +219,32 @@ extension AsyncButton where Label == SwiftUI.Label<Text, Image> {
             disableWhenRunning: disableWhenRunning,
             action: action
         ) {
-            Label(LocalizedStringKey(label), systemImage: systemImage)
+            Label(title, systemImage: systemImage)
+        }
+    }
+    
+    /// AsyncButton convenience initializer, Useful to create a new button mimicing the native `Label` behaviour
+    ///
+    /// - Parameters:
+    ///   - titleKey: A `LocalizedStringKey` that will allow to display a localized button label.
+    ///   - systemImage: A `String` that represents the name of a SFSymbol (System Image),
+    ///   - role: The role of the button.
+    ///   - disableWhenRunning: A boolean that dictates is the button should be disabled while the async task is running.
+    ///   - action: A closure to be executed asynchronously.
+    public init(
+        _ titleKey: LocalizedStringKey,
+        systemImage: String,
+        role: ButtonRole? = nil,
+        disableWhenRunning: Bool = true,
+        action: @escaping () async throws -> Void
+    ) {
+        
+        self.init(
+            role: role,
+            disableWhenRunning: disableWhenRunning,
+            action: action
+        ) {
+            Label(titleKey, systemImage: systemImage)
         }
     }
 }

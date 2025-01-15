@@ -112,18 +112,18 @@ public struct AsyncFileButton<Label: View>: View {
     }
 }
 
-// MARK: - Convenience Initializer
+// MARK: - Convenience Initializers
 
 extension AsyncFileButton where Label == Text {
     
-    /// Creates an `AsyncFileButton` with a text label.
+    /// Creates an `AsyncFileButton` with a `String` literal text label.
     ///
     /// - Parameters:
-    ///   - label: A `String` representing the button text.
+    ///   - title: A `String` literal representing the button text.
     ///   - allowedContentType: The file type allowed for selection, specified as a `UTType`.
     ///   - action: An asynchronous closure that processes the selected file.
     public init(
-        _ label: String,
+        _ title: String,
         allowedContentType: UTType,
         action: @escaping (URL) async throws -> Void
     ) {
@@ -131,24 +131,41 @@ extension AsyncFileButton where Label == Text {
             allowedContentType: allowedContentType,
             action: action
         ) {
-            Text(LocalizedStringKey(label))
+            Text(verbatim: title)
+        }
+    }
+    
+    /// Creates an `AsyncFileButton` with a `LocalizedStringKey` text label.
+    ///
+    /// - Parameters:
+    ///   - titleKey: A `LocalizedStringKey` that will allow to display a localized button label.
+    ///   - allowedContentType: The file type allowed for selection, specified as a `UTType`.
+    ///   - action: An asynchronous closure that processes the selected file.
+    public init(
+        _ titleKey: LocalizedStringKey,
+        allowedContentType: UTType,
+        action: @escaping (URL) async throws -> Void
+    ) {
+        self.init(
+            allowedContentType: allowedContentType,
+            action: action
+        ) {
+            Text(titleKey)
         }
     }
 }
 
-// MARK: - Convenience Initializer
-
 extension AsyncFileButton where Label == SwiftUI.Label<Text, Image> {
     
-    /// Creates an `AsyncFileButton` with a SwifUI Label.
+    /// Creates an `AsyncFileButton` with a SwifUI `Label` using a `String` literal as title.
     ///
     /// - Parameters:
-    ///   - label: A `String` representing the button text.
+    ///   - title: A `String` literal representing the button text.
     ///   - systemImage: A String that represents the name of a SFSymbol (System Image),
     ///   - allowedContentType: The file type allowed for selection, specified as a `UTType`.
     ///   - action: An asynchronous closure that processes the selected file.
     public init(
-        _ label: String,
+        _ title: String,
         systemImage: String,
         allowedContentType: UTType,
         action: @escaping (URL) async throws -> Void
@@ -157,7 +174,28 @@ extension AsyncFileButton where Label == SwiftUI.Label<Text, Image> {
             allowedContentType: allowedContentType,
             action: action
         ) {
-            Label(LocalizedStringKey(label), systemImage: systemImage)
+            Label(title, systemImage: systemImage)
+        }
+    }
+    
+    /// Creates an `AsyncFileButton` with a SwifUI `Label` using a `LocalizedStringKey` as title.
+    ///
+    /// - Parameters:
+    ///   - titleKey: A `LocalizedStringKey` that will allow to display a localized button label.
+    ///   - systemImage: A String that represents the name of a SFSymbol (System Image),
+    ///   - allowedContentType: The file type allowed for selection, specified as a `UTType`.
+    ///   - action: An asynchronous closure that processes the selected file.
+    public init(
+        _ titleKey: LocalizedStringKey,
+        systemImage: String,
+        allowedContentType: UTType,
+        action: @escaping (URL) async throws -> Void
+    ) {
+        self.init(
+            allowedContentType: allowedContentType,
+            action: action
+        ) {
+            Label(titleKey, systemImage: systemImage)
         }
     }
 }
