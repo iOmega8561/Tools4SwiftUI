@@ -49,7 +49,7 @@ public struct BubbleContainer<Content: View>: View {
             
             // Label at the top of the container
             Text(LocalizedStringKey(label))
-                .font(.title3)
+                .font(.headline)
                 .padding(.leading)
             
             // Main content container with background and border
@@ -71,10 +71,10 @@ public struct BubbleContainer<Content: View>: View {
                 .padding(.horizontal, withPadding ? nil:0)
                 
             }
-            .clipShape(RoundedRectangle(cornerRadius: 10))
+            .clipShape(RoundedRectangle(cornerRadius: 5))
             .overlay {
-                RoundedRectangle(cornerRadius: 10)
-                    .stroke(Color.accentColor.opacity(0.3), lineWidth: 2.0)
+                RoundedRectangle(cornerRadius: 5)
+                    .stroke(Color.gray.opacity(0.5), lineWidth: 1.5)
             }
         }
         .padding(.horizontal)

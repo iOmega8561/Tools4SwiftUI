@@ -60,13 +60,13 @@ public struct ComplexPicker<Value: RandomAccessCollection, Label: View>: View wh
                 
                 Button { value = current } label: {
                     
-                    RoundedRectangle(cornerRadius: 8)
+                    RoundedRectangle(cornerRadius: 5)
                         .fill(fill(current))
                         .overlay {
                             label(current)
                                 .foregroundStyle(isSelected(current) ? .white: .primary)
                         }
-                        .contentShape(RoundedRectangle(cornerRadius: 8))
+                        .contentShape(RoundedRectangle(cornerRadius: 5))
                 }
                 .buttonStyle(.plain)
                 .allowsHitTesting(!isSelected(current))
@@ -98,7 +98,7 @@ public struct ComplexPicker<Value: RandomAccessCollection, Label: View>: View wh
     private func fill(_ current: Value.Element) -> AnyShapeStyle {
         
         if isSelected(current) {
-            return AnyShapeStyle(Color.accentColor.opacity(0.9))
+            return AnyShapeStyle(Color.accentColor.opacity(0.8))
         }
         
         return AnyShapeStyle(BackgroundStyle.background)

@@ -38,6 +38,6 @@ public extension Color {
     /// Ensure that the color set is included in the appropriate targets and configured correctly.
     static var systemGroupedBackground: Color {
         .init("macOS/systemGroupedBackground", bundle: .module)
-    }
+    }    
     #endif
 }

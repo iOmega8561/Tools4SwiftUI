@@ -56,7 +56,7 @@ public struct DictionaryList<K: Hashable, V: Any, Label: View>: View {
                     Button(action: { selection = item }) {
                         
                         RoundedRectangle(cornerRadius: 5.0)
-                            .fill(item == selection ? Color.accentColor.opacity(0.65):Color.clear)
+                            .fill(item == selection ? Color.accentColor.opacity(0.8):Color.clear)
                         
                             .overlay {
                                 content(item)
