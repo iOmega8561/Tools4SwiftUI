@@ -59,7 +59,7 @@ public struct BubbleContainer<Content: View>: View {
                     #if os(iOS)
                     .fill(Color(.systemGroupedBackground))
                     #elseif os(macOS)
-                    .fill(Color.systemGroupedBackground)
+                    .fill(Color(.quaternarySystemFill))
                     #else
                     .fill(.background)
                     #endif
