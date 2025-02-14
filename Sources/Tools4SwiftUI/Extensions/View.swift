@@ -9,6 +9,33 @@ import UniformTypeIdentifiers
 
 public extension View {
     
+    /// Allows to conditionally transform the target view through one or multiple modifiers
+    ///
+    /// ### Example Usage:
+    /// ```swift
+    /// .conditionalModifier(showDoneButton) { targetView in
+    ///  targetView
+    ///     .overlay(alignment: .bottom) {
+    ///         Button {
+    ///          counter += 1
+    ///         } label: {
+    ///          Text("Ok!")
+    ///         }
+    ///         .buttonStyle(.bordered)
+    ///     }
+    ///  ```
+    /// - Parameters:
+    ///   - condition: The boolean check to be perfomed in order to allow the modifications.
+    ///   - transform: A closure that performs modification to the target view (i.e. other modifiers).
+    /// - Returns: The modified view.
+    @ViewBuilder func conditionalModifier<Content: View>(_ condition: Bool, transform: (Self) -> Content) -> some View {
+        if condition {
+            transform(self)
+        } else {
+            self
+        }
+    }
+    
     /// Attaches a file importer to the view, allowing users to select files asynchronously.
     ///
     /// This version supports specifying multiple allowed content types for the file importer.
