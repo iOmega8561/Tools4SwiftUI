@@ -9,31 +9,35 @@ import UniformTypeIdentifiers
 
 public extension View {
     
-    /// Allows to conditionally transform the target view through one or multiple modifiers
+    /// Conditionally transforms the view.
+    ///
+    /// Use this method to apply a transformation to the view only if the specified condition is true.
+    /// If the condition is false, the original view is returned unchanged.
     ///
     /// ### Example Usage:
     /// ```swift
-    /// .conditionalModifier(showDoneButton) { targetView in
-    ///  targetView
-    ///     .overlay(alignment: .bottom) {
+    /// someView.conditionalModifier(showDoneButton) { view in
+    ///     view.overlay(alignment: .bottom) {
     ///         Button {
-    ///          counter += 1
+    ///             counter += 1
     ///         } label: {
-    ///          Text("Ok!")
+    ///             Text("Ok!")
     ///         }
     ///         .buttonStyle(.bordered)
     ///     }
-    ///  ```
+    /// }
+    /// ```
+    ///
     /// - Parameters:
-    ///   - condition: The boolean check to be perfomed in order to allow the modifications.
-    ///   - transform: A closure that performs modification to the target view (i.e. other modifiers).
-    /// - Returns: The modified view.
-    @ViewBuilder func conditionalModifier<Content: View>(_ condition: Bool, transform: (Self) -> Content) -> some View {
-        if condition {
-            transform(self)
-        } else {
-            self
-        }
+    ///   - booleanCondition: A Boolean value that determines whether the transformation should be applied.
+    ///   - transformingClosure: A closure that transforms the view content when the condition is `true`.
+    /// - Returns: A modified view if the condition is met; otherwise, the original view.
+    @ViewBuilder func conditionalModifier<Content: View>(
+        _ booleanCondition: Bool,
+        transformingClosure: (Self) -> Content
+    ) -> some View {
+        
+        if booleanCondition { transformingClosure(self) } else { self }
     }
     
     /// Attaches a file importer to the view, allowing users to select files asynchronously.
