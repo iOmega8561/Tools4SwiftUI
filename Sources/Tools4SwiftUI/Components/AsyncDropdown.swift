@@ -154,14 +154,14 @@ public struct AsyncDropdown<Content: View>: View {
     ///   - titleKey: The localized string key for the button's title.
     ///   - systemImage: The name of the SF Symbol to use as an icon.
     ///   - disableWhenRunning: Whether to disable the button while executing the action.
-    ///   - action: The asynchronous action to be executed.
     ///   - content: The content of the dropdown menu.
+    ///   - action: The asynchronous action to be executed.
     public init(
         _ titleKey: LocalizedStringKey,
         systemImage: String,
         disableWhenRunning: Bool = true,
-        action: @escaping () async throws -> Void,
-        content: @escaping () -> Content
+        content: @escaping () -> Content,
+        action: @escaping () async throws -> Void
     ) {
         self.disableWhenRunning = disableWhenRunning
         self.text = { Text(titleKey) }
@@ -176,14 +176,14 @@ public struct AsyncDropdown<Content: View>: View {
     ///   - titleKey: The localized string key for the button's title.
     ///   - image: A custom `Image` to use as an icon.
     ///   - disableWhenRunning: Whether to disable the button while executing the action.
-    ///   - action: The asynchronous action to be executed.
     ///   - content: The content of the dropdown menu.
+    ///   - action: The asynchronous action to be executed.
     public init(
         _ titleKey: LocalizedStringKey,
         image: Image,
         disableWhenRunning: Bool = true,
-        action: @escaping () async throws -> Void,
-        content: @escaping () -> Content
+        content: @escaping () -> Content,
+        action: @escaping () async throws -> Void
     ) {
         self.disableWhenRunning = disableWhenRunning
         self.text = { Text(titleKey) }
@@ -198,14 +198,14 @@ public struct AsyncDropdown<Content: View>: View {
     ///   - verbatim: The title text for the button (non-localized).
     ///   - systemImage: The name of the SF Symbol to use as an icon.
     ///   - disableWhenRunning: Whether to disable the button while executing the action.
-    ///   - action: The asynchronous action to be executed.
     ///   - content: The content of the dropdown menu.
+    ///   - action: The asynchronous action to be executed.
     public init(
         verbatim: String,
         systemImage: String,
         disableWhenRunning: Bool = true,
-        action: @escaping () async throws -> Void,
-        content: @escaping () -> Content
+        content: @escaping () -> Content,
+        action: @escaping () async throws -> Void
     ) {
         self.disableWhenRunning = disableWhenRunning
         self.text = { Text(verbatim: verbatim) }
@@ -220,14 +220,14 @@ public struct AsyncDropdown<Content: View>: View {
     ///   - verbatim: The title text for the button (non-localized).
     ///   - image: A custom `Image` to use as an icon.
     ///   - disableWhenRunning: Whether to disable the button while executing the action.
-    ///   - action: The asynchronous action to be executed.
     ///   - content: The content of the dropdown menu.
+    ///   - action: The asynchronous action to be executed.
     public init(
         verbatim: String,
         image: Image,
         disableWhenRunning: Bool = true,
-        action: @escaping () async throws -> Void,
-        content: @escaping () -> Content
+        content: @escaping () -> Content,
+        action: @escaping () async throws -> Void
     ) {
         self.disableWhenRunning = disableWhenRunning
         self.text = { Text(verbatim: verbatim) }
