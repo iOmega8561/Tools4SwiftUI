@@ -15,6 +15,30 @@
 /// although it has been designed targeting macOS first.
 public struct AsyncDropdown<Content: View>: View {
     
+    /// A custom button style that visually responds to user interaction.
+    ///
+    /// This style changes the foreground color and background color when the button is pressed,
+    /// providing visual feedback. It also applies a clipped rectangular shape with rounded corners.
+    ///
+    /// - When the button is pressed:
+    ///   - The foreground color switches to `.primary`.
+    ///   - The background color becomes a semi-transparent gray.
+    /// - When not pressed:
+    ///   - The foreground color switches to `.secondary`.
+    ///   - The background remains clear.
+    private struct _ButtonStyle: ButtonStyle {
+        
+        /// Creates the view for the button using the given configuration.
+        /// - Parameter configuration: Provides the label and interaction state of the button.
+        /// - Returns: A modified view that visually reflects the button's pressed state.
+        func makeBody(configuration: Configuration) -> some View {
+            configuration.label
+                .foregroundStyle(configuration.isPressed ? .primary : .secondary) // Changes text color when pressed
+                .background(configuration.isPressed ? Color.gray.opacity(0.2) : .clear) // Background changes on press
+                .clipShape(.rect(cornerRadius: 7)) // Applies rounded corners
+        }
+    }
+
     // MARK: - Properties
     
     /// A Boolean value that determines whether the button should be disabled while the asynchronous task is running.
@@ -82,7 +106,7 @@ public struct AsyncDropdown<Content: View>: View {
                         .foregroundStyle(.secondary)
                         .frame(idealWidth: 15, idealHeight: 15)
                 }
-                .padding(.horizontal, 10)
+                .padding(.horizontal)
                 .padding(.vertical, 6)
                 
                 if isHovered {
@@ -108,7 +132,7 @@ public struct AsyncDropdown<Content: View>: View {
         } primaryAction: { buttonHandler() }
         
             .menuStyle(.button)
-            .buttonStyle(.plain)
+            .buttonStyle(_ButtonStyle())
             .onHover { isHovered = $0 }
             .disabled(isDisabled)
         
