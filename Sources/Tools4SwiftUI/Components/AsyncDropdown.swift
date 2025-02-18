@@ -103,7 +103,6 @@ public struct AsyncDropdown<Content: View>: View {
                     image()
                         .resizable()
                         .scaledToFit()
-                        .foregroundStyle(.secondary)
                         .frame(idealWidth: 15, idealHeight: 15)
                 }
                 .padding(.horizontal)
@@ -118,7 +117,6 @@ public struct AsyncDropdown<Content: View>: View {
                 }
             }
             .background(isHovered ? .gray.opacity(0.1) : .clear)
-            .clipShape(.rect(cornerRadius: 7))
             .opacity(showProgressView ? 0 : 1)
             .overlay {
                 ProgressView()
