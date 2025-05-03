@@ -33,23 +33,5 @@ public extension UIAlertController {
         
         viewController.present(alert, animated: true, completion: nil)
     }
-    
-    /// Displays a critical error and immediately terminates the app.
-    ///
-    /// Presents an alert and exits the app after the user dismisses it.
-    ///
-    /// - Note: There's no `.critical` style in UIKit, so this uses a standard alert style.
-    /// - Important: Will exit the app using `exit(EXIT_FAILURE)` after the alert is dismissed.
-    ///
-    /// - Parameters:
-    ///   - error: The critical error to display.
-    ///   - viewController: The view controller from which to present the alert.
-    static func fatalError(_ error: Error, in viewController: UIViewController) -> Never {
-        
-        displayError(error, in: viewController)
-        
-        RunLoop.main.run()
-        exit(EXIT_FAILURE)
-    }
 }
 #endif
