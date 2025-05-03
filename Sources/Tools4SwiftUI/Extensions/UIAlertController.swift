@@ -46,7 +46,10 @@ public extension UIAlertController {
     ///   - viewController: The view controller from which to present the alert.
     static func fatalError(_ error: Error, in viewController: UIViewController) -> Never {
         
-        displayError(error, in: viewController); exit(EXIT_FAILURE)
+        displayError(error, in: viewController)
+        
+        RunLoop.main.run()
+        exit(EXIT_FAILURE)
     }
 }
 #endif
