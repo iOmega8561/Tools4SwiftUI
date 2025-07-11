@@ -76,7 +76,7 @@ public struct AsyncDropdown<Content: View>: View {
     /// A closure that provides the content of the dropdown menu.
     ///
     /// This defines the additional options available when the dropdown menu is opened.
-    private let content: () -> Content
+    @ViewBuilder private let content: () -> Content
 
     /// The primary asynchronous action executed when the button is clicked.
     ///
