@@ -120,7 +120,7 @@ public struct AsyncFileButton<Label: View>: View {
     public init(
         allowedContentType: UTType,
         action: @escaping (URL) async throws -> Void,
-        label: @escaping () -> Label
+        @ViewBuilder label: @escaping () -> Label
     ) {
         self.allowedContentType = allowedContentType
         self.action = action

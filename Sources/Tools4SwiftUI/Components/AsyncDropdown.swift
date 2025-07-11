@@ -198,7 +198,7 @@ public struct AsyncDropdown<Content: View>: View {
         _ titleKey: LocalizedStringKey,
         systemImage: String,
         disableWhenRunning: Bool = true,
-        content: @escaping () -> Content,
+        @ViewBuilder content: @escaping () -> Content,
         action: @escaping () async throws -> Void
     ) {
         self.disableWhenRunning = disableWhenRunning
@@ -220,7 +220,7 @@ public struct AsyncDropdown<Content: View>: View {
         _ titleKey: LocalizedStringKey,
         image: Image,
         disableWhenRunning: Bool = true,
-        content: @escaping () -> Content,
+        @ViewBuilder content: @escaping () -> Content,
         action: @escaping () async throws -> Void
     ) {
         self.disableWhenRunning = disableWhenRunning
@@ -242,7 +242,7 @@ public struct AsyncDropdown<Content: View>: View {
         verbatim: String,
         systemImage: String,
         disableWhenRunning: Bool = true,
-        content: @escaping () -> Content,
+        @ViewBuilder content: @escaping () -> Content,
         action: @escaping () async throws -> Void
     ) {
         self.disableWhenRunning = disableWhenRunning
@@ -264,7 +264,7 @@ public struct AsyncDropdown<Content: View>: View {
         verbatim: String,
         image: Image,
         disableWhenRunning: Bool = true,
-        content: @escaping () -> Content,
+        @ViewBuilder content: @escaping () -> Content,
         action: @escaping () async throws -> Void
     ) {
         self.disableWhenRunning = disableWhenRunning

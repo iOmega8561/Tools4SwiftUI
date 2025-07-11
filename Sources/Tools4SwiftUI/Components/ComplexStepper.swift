@@ -116,7 +116,7 @@ public struct ComplexStepper<Label:View, ValueType: BinaryInteger>: View {
         value: ValueType,
         steps: [(Range<ValueType>, Int)],
         action: @escaping (Int) -> Void,
-        label: @escaping () -> Label
+        @ViewBuilder label: @escaping () -> Label
     ) {
         
         guard !steps.isEmpty else { return nil }

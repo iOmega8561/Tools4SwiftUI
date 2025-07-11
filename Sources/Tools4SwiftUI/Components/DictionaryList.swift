@@ -108,7 +108,7 @@ public struct DictionaryList<K: Hashable, V: Any, Label: View>: View {
     public init(
         _ dict: [K : V],
         selection: Binding<K?>,
-        content: @escaping (K) -> Label,
+        @ViewBuilder content: @escaping (K) -> Label,
         sortedBy sortingClosure: @escaping (K, K) -> Bool
     ) {
         self.dict = dict

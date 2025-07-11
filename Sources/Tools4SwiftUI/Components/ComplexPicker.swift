@@ -130,7 +130,7 @@ public struct ComplexPicker<Value: RandomAccessCollection, Label: View>: View wh
     public init(
         _ array: Value,
         value: Binding<Value.Element>,
-        label: @escaping (Value.Element) -> Label,
+        @ViewBuilder label: @escaping (Value.Element) -> Label,
         filterUsing: @escaping (Value.Element) -> Bool = { _ in return true }
     ) {
         self.array = array

@@ -152,7 +152,7 @@ public struct AsyncButton<Label: View>: View {
         role: ButtonRole? = nil ,
         disableWhenRunning: Bool = true,
         action: @escaping () async throws -> Void,
-        label: @escaping () -> Label
+        @ViewBuilder label: @escaping () -> Label
     ) {
         self.role = role
         self.disableWhenRunning = disableWhenRunning
