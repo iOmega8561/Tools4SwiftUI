@@ -87,9 +87,9 @@ public struct BubbleContainer<Content: View>: View {
                 .padding(.horizontal, withPadding ? nil:0)
                 
             }
-            .clipShape(RoundedRectangle(cornerRadius: 5))
+            .clipShape(RoundedRectangle(cornerRadius: .bestRadius))
             .overlay {
-                RoundedRectangle(cornerRadius: 5)
+                RoundedRectangle(cornerRadius: .bestRadius)
                     .stroke(Color.gray.opacity(0.5), lineWidth: 1.5)
             }
         }

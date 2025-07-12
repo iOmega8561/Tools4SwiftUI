@@ -51,7 +51,7 @@ public struct AsyncDropdown<Content: View>: View {
             configuration.label
                 .foregroundStyle(configuration.isPressed ? .primary : .secondary) // Changes text color when pressed
                 .background(configuration.isPressed ? Color.gray.opacity(0.2) : .clear) // Background changes on press
-                .clipShape(.rect(cornerRadius: 7)) // Applies rounded corners
+                .clipShape(.buttonBorder) // Applies rounded corners
         }
     }
 
@@ -129,7 +129,10 @@ public struct AsyncDropdown<Content: View>: View {
                     Image(systemName: "chevron.down")
                         .foregroundStyle(.secondary)
                         .font(.system(size: 8, weight: .semibold))
-                        .offset(x: -2, y: -2)
+                        .offset(
+                            x: { if #available(macOS 26.0, *) { -5 } else { -2 } }(),
+                            y: -3
+                        )
                 }
             }
             .background(isHovered ? .gray.opacity(0.1) : .clear)

@@ -76,13 +76,13 @@ public struct ComplexPicker<Value: RandomAccessCollection, Label: View>: View wh
                 
                 Button { value = current } label: {
                     
-                    RoundedRectangle(cornerRadius: 5)
+                    RoundedRectangle(cornerRadius: .bestRadius)
                         .fill(fill(current))
                         .overlay {
                             label(current)
                                 .foregroundStyle(isSelected(current) ? .white: .primary)
                         }
-                        .contentShape(RoundedRectangle(cornerRadius: 5))
+                        .contentShape(.rect(cornerRadius: .bestRadius))
                 }
                 .buttonStyle(.plain)
                 .allowsHitTesting(!isSelected(current))
