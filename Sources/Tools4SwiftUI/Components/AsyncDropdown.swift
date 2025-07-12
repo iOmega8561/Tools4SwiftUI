@@ -122,7 +122,7 @@ public struct AsyncDropdown<Content: View>: View {
                         .frame(idealWidth: 15, idealHeight: 15)
                 }
                 .padding(.horizontal)
-                .padding(.vertical, 6)
+                .padding(.vertical, { if #available(macOS 26.0, *) { 10 } else { 6 } }())
                 
                 if isHovered {
                     
