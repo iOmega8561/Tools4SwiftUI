@@ -55,7 +55,7 @@ public extension CGFloat {
         8           // iOS, iPadOS, watchOS
         #elseif os(macOS)
         if #available(macOS 26, *) { // Tahoe & beyond
-            8
+            10
         } else {
             5
         }
