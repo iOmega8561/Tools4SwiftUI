@@ -44,7 +44,7 @@ import UniformTypeIdentifiers
 ///     var body: some View {
 ///         AsyncFileButton(
 ///             "Select a File",
-///             allowedContentType: .plainText
+///             contentType: .plainText
 ///         ) { fileURL in
 ///             print("Selected file: \(fileURL.path)")
 ///             // Perform asynchronous operations with the selected file.
@@ -85,7 +85,7 @@ public struct AsyncFileButton<Label: View>: View {
     /// ```swift
     /// AsyncFileButton(
     ///     verbatim: "Export",
-    ///     mode: .export(allowedContentType: .plainText, defaultFileName: "example")
+    ///     mode: .export(contentType: .plainText, defaultName: "example")
     /// ) { url in
     ///     try await export(to: url)
     /// }
@@ -93,8 +93,8 @@ public struct AsyncFileButton<Label: View>: View {
     ///
     /// - Note: Both modes manage sandbox-safe access to the selected URL.
     public enum Mode {
-        case pick(allowedContentType: UTType)
-        case export(allowedContentType: UTType, defaultFileName: String? = nil)
+        case pick(contentType: UTType)
+        case export(contentType: UTType, defaultName: String? = nil)
     }
 
     // MARK: - Properties
@@ -118,16 +118,16 @@ public struct AsyncFileButton<Label: View>: View {
             let file: URL?
             
             switch mode {
-            case .export(let allowedContentType, let defaultFileName):
+            case .export(let contentType, let defaultName):
                 
                 file = await NSSavePanel.fileExporter(
-                    allowedContentTypes: [allowedContentType],
-                    defaultFileName: defaultFileName
+                    allowedContentTypes: [contentType],
+                    defaultFileName: defaultName
                 )
-            case .pick(let allowedContentType):
+            case .pick(let contentType):
                 
                 file = await NSOpenPanel.filePicker(
-                    allowedContentTypes: [allowedContentType]
+                    allowedContentTypes: [contentType]
                 )
             }
             
