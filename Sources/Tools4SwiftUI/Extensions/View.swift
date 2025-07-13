@@ -25,6 +25,20 @@ import UniformTypeIdentifiers
 
 public extension View {
     
+    /// Adds an async file-drop handler for the specified UTTypes.
+    ///
+    /// - Parameters:
+    ///   - types: The `UTType` array to accept.
+    ///   - isTargeted: Binding that tracks hover state over the drop area.
+    ///   - perform: An async-throwing closure run off the MainActor after each file URL loads.
+    func onAsyncFileDrop(
+        of types: [UTType],
+        isTargeted: Binding<Bool> = .constant(false),
+        perform handler: @Sendable @escaping (URL) async throws -> Void
+    ) -> some View {
+        modifier(OnAsyncFileDrop(of: types, isTargeted: isTargeted, handler: handler))
+    }
+    
     /// Conditionally transforms the view.
     ///
     /// Use this method to apply a transformation to the view only if the specified condition is true.
