@@ -6,7 +6,7 @@
   </a>
 
   [![Swift](https://img.shields.io/badge/Swift-5.9-orange.svg)](https://swift.org/download/)
-  <p>A collection of reusable components and utilities to enhance SwiftUI development,<br>with a focus on flexibility, customization, and modern UI design.</p>
+  <p>Collection of reusable components and utilities to enhance SwiftUI development,<br>with a focus on flexibility, customization, and modern UI design.</p>
   
 </div>
 
