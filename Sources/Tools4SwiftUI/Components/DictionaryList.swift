@@ -84,7 +84,7 @@ public struct DictionaryList<K: Hashable, V: Any, Label: View>: View {
                     }
                     .buttonStyle(.plain)
                     
-                    .onChange(of: selection) {
+                    .onChange(of: selection) { _ in
                         withAnimation(.linear) {
                             proxy.scrollTo(selection)
                         }

@@ -31,6 +31,7 @@ public extension View {
     ///   - types: The `UTType` array to accept.
     ///   - isTargeted: Binding that tracks hover state over the drop area.
     ///   - perform: An async-throwing closure run off the MainActor after each file URL loads.
+    @available(macOS 13.0, iOS 16.0, tvOS 16.0, visionOS 1.0, *)
     func onAsyncFileDrop(
         of types: [UTType],
         isTargeted: Binding<Bool> = .constant(false),

@@ -7,9 +7,9 @@ let package = Package(
     name: "Tools4SwiftUI",
     defaultLocalization: "en",
     platforms: [
-        .macOS(.v14),
-        .iOS(.v17),
-        .tvOS(.v17),
+        .macOS(.v12),
+        .iOS(.v15),
+        .tvOS(.v15),
         .visionOS(.v1)
     ],
     products: [

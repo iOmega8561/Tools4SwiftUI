@@ -36,6 +36,7 @@ import UniformTypeIdentifiers
 /// - Note: Apple does *not* officially publish numeric drag-and-drop radii or scheduling details;
 ///   this modifier’s use of `Task(detached:)` ensures your handler runs on a background executor,
 ///   not on the MainActor.
+@available(macOS 13.0, iOS 16.0, tvOS 16.0, visionOS 1.0, *)
 public struct OnAsyncFileDrop: ViewModifier {
     
     /// The UTTypes this view will accept via drop.

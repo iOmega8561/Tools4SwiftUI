@@ -23,6 +23,10 @@
 
 @_exported import SwiftUI
 
-#if os(macOS)
+#if canImport(AppKit)
 @_exported import AppKit
+#endif
+
+#if canImport(UIKit)
+@_exported import UIKit
 #endif

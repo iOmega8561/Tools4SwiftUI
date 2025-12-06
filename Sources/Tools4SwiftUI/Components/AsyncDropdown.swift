@@ -29,6 +29,7 @@
 ///
 /// This component supports both **macOS** and other platforms, with platform-specific error handling,
 /// although it has been designed targeting macOS first.
+@available(macOS 14.0, iOS 17.0, tvOS 17.0, visionOS 1.0, *)
 public struct AsyncDropdown<Content: View>: View {
     
     /// A custom button style that visually responds to user interaction.

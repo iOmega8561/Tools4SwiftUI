@@ -34,6 +34,7 @@
 ///
 /// - Generics:
 ///   - `Content`: The type of view that will be wrapped by the container.
+@available(macOS 14.0, iOS 16.0, tvOS 16.0, visionOS 1.0, *)
 public struct BubbleContainer<Content: View>: View {
     
     /// The label displayed at the top of the container.
