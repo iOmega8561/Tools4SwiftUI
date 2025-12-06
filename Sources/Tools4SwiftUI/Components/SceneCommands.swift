@@ -35,7 +35,7 @@
 ///
 /// - Note:
 ///   - The help menu items include customizable keyboard shortcuts.
-@available(macOS 13.0, iOS 15.0, tvOS 15.0, visionOS 1.0, *)
+@available(macOS 13.0, *)
 public struct SceneCommands: Commands {
     
     /// The URL of the website to be linked in the help menu.

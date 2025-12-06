@@ -34,7 +34,7 @@
 ///
 /// - Generics:
 ///   - `Content`: The type of view that will be wrapped by the container.
-@available(macOS 14.0, iOS 16.0, tvOS 16.0, visionOS 1.0, *)
+@available(macOS 13.0, iOS 16.0, tvOS 16.0, visionOS 1.0, *)
 public struct BubbleContainer<Content: View>: View {
     
     /// The label displayed at the top of the container.
@@ -76,7 +76,13 @@ public struct BubbleContainer<Content: View>: View {
                     #if os(iOS)
                     .fill(Color(.systemGroupedBackground))
                     #elseif os(macOS)
-                    .fill(Color(.quaternarySystemFill))
+                    .fill({
+                        if #available(macOS 14, *) {
+                            return Color(.quaternarySystemFill)
+                        } else {
+                            return Color.gray
+                        }
+                    }())
                     #else
                     .fill(.background)
                     #endif
