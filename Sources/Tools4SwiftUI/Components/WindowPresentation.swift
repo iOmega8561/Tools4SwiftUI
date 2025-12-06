@@ -77,6 +77,9 @@ public struct WindowPresentation: ViewModifier {
 
     /// The tabbing mode for the window.
     private let tabbingMode: NSWindow.TabbingMode
+    
+    /// The background color of the NSWindow
+    private let backgroundColor: NSColor?
 
     // MARK: - Body
 
@@ -90,27 +93,29 @@ public struct WindowPresentation: ViewModifier {
                 let window = NSApp.keyWindow
                 window?.delegate = windowDelegate
                 window?.tabbingMode = tabbingMode
+                
+                if let backgroundColor {
+                    window?.backgroundColor = backgroundColor
+                }
             }
     }
     
     // MARK: - Initializers
-
-    /// Creates a `WindowPresentation` modifier with the specified full-screen presentation options.
-    ///
-    /// - Parameter options: A set of presentation options that define the behavior of a window in full-screen mode.
-    public init(_ fullScreenOptions: NSApplication.PresentationOptions) {
-        self.windowDelegate = WindowDelegate(fullScreenOptions)
-        self.tabbingMode = .automatic
-    }
 
     /// Creates a `WindowPresentation` modifier with the specified full-screen presentation options and tabbing mode.
     ///
     /// - Parameters:
     ///   - options: A set of presentation options that define the behavior of a window in full-screen mode.
     ///   - tabbingMode: The tabbing mode for the window. Defaults to `.automatic`.
-    public init(_ fullScreenOptions: NSApplication.PresentationOptions, tabbingMode: NSWindow.TabbingMode) {
+    ///   - background: The **optional** NSColor that will be used as background
+    public init(
+        _ fullScreenOptions: NSApplication.PresentationOptions,
+        tabbingMode: NSWindow.TabbingMode = .automatic,
+        background: NSColor? = nil
+    ) {
         self.windowDelegate = WindowDelegate(fullScreenOptions)
         self.tabbingMode = tabbingMode
+        self.backgroundColor = background
     }
 }
 #endif

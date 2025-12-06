@@ -125,6 +125,7 @@ public extension View {
     ///     - `.automatic`: Default behavior for tabbing, based on system settings.
     ///     - `.preferred`: Suggests the window prefers tabbing.
     ///     - `.disallowed`: Prevents the window from using tabs.
+    ///   - background: The **optional** NSColor that will be used as background
     ///
     /// Example usage:
     /// ```swift
@@ -137,8 +138,16 @@ public extension View {
     /// ```
     ///
     /// - Returns: A view modified to apply the specified full-screen presentation options and tabbing mode.
-    func windowPresentation(_ fullScreenOptions: NSApplication.PresentationOptions, tabbingMode: NSWindow.TabbingMode = .automatic) -> some View {
-        self.modifier(WindowPresentation(fullScreenOptions, tabbingMode: tabbingMode))
+    func windowPresentation(
+        _ fullScreenOptions: NSApplication.PresentationOptions,
+        tabbingMode: NSWindow.TabbingMode = .automatic,
+        background: NSColor? = nil
+    ) -> some View {
+        self.modifier(WindowPresentation(
+            fullScreenOptions,
+            tabbingMode: tabbingMode,
+            background: background
+        ))
     }
     
     /// Opens a new window independently, enabling multiple instances without relying on WindowGroup.
