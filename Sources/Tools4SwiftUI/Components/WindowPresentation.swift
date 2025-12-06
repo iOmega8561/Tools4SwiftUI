@@ -107,15 +107,15 @@ public struct WindowPresentation: ViewModifier {
     /// - Parameters:
     ///   - options: A set of presentation options that define the behavior of a window in full-screen mode.
     ///   - tabbingMode: The tabbing mode for the window. Defaults to `.automatic`.
-    ///   - background: The **optional** NSColor that will be used as background
+    ///   - backgroundColor: The **optional** NSColor that will be used as background
     public init(
         _ fullScreenOptions: NSApplication.PresentationOptions,
         tabbingMode: NSWindow.TabbingMode = .automatic,
-        background: NSColor? = nil
+        backgroundColor: NSColor? = nil
     ) {
         self.windowDelegate = WindowDelegate(fullScreenOptions)
         self.tabbingMode = tabbingMode
-        self.backgroundColor = background
+        self.backgroundColor = backgroundColor
     }
 }
 #endif
