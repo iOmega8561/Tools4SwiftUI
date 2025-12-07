@@ -32,9 +32,9 @@ public extension CGFloat {
     /// layer property introspection, and pixel-accurate comparison against native UI components.
     ///
     /// - On **macOS 15 and earlier**, system buttons and containers typically use a `5 pt` corner radius.
-    /// - On **macOS 26 (Tahoe)** and newer, the system standard shifts to `8 pt` for buttons, sheets, and panels,
+    /// - On **macOS 26 (Tahoe)** and newer, the system standard shifts to `10 pt` for buttons, sheets, and panels,
     ///   aligning with iOS and iPadOS conventions.
-    /// - On **iOS, iPadOS, and watchOS**, the typical system radius is `8 pt`.
+    /// - On **iOS, iPadOS, and watchOS**, the typical system radius is `8 pt`. Starting from **iOS 26** we shift to `10 pt`.
     /// - On **tvOS**, system cards and buttons use larger radii (typically `12–16 pt`) for better visibility.
     /// - On **visionOS**, spatial panels use radii in the range of `10–12 pt`.
     ///
@@ -52,7 +52,11 @@ public extension CGFloat {
         #elseif os(visionOS)
         10          // mid-sized spatial panels
         #elseif os(iOS) || os(watchOS)
-        8           // iOS, iPadOS, watchOS
+        if #available(iOS 26, watchOS 26, *) { // Liquid glass
+            10
+        } else {
+            8
+        }
         #elseif os(macOS)
         if #available(macOS 26, *) { // Tahoe & beyond
             10
