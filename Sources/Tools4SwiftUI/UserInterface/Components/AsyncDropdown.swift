@@ -50,7 +50,7 @@ public struct AsyncDropdown<Content: View>: View {
         /// - Returns: A modified view that visually reflects the button's pressed state.
         func makeBody(configuration: Configuration) -> some View {
             configuration.label
-                .foregroundStyle(configuration.isPressed ? .primary : .secondary) // Changes text color when pressed
+                .foregroundStyle(HierarchicalShapeStyle.buttonForegroundStyle(for: configuration)) // Changes text color when pressed
                 .background(configuration.isPressed ? Color.gray.opacity(0.2) : .clear) // Background changes on press
                 .clipShape(.buttonBorder) // Applies rounded corners
         }
