@@ -120,12 +120,12 @@ public extension View {
     /// This modifier allows you to customize how the window behaves when entering full-screen mode and control the window's tabbing behavior.
     ///
     /// - Parameters:
-    ///   - options: A set of `NSApplication.PresentationOptions` that define the window's behavior in full-screen mode.
-    ///   - tabbingMode: The tabbing mode for the window. Options include:
-    ///     - `.automatic`: Default behavior for tabbing, based on system settings.
-    ///     - `.preferred`: Suggests the window prefers tabbing.
-    ///     - `.disallowed`: Prevents the window from using tabs.
-    ///   - backgroundColor: The **optional** NSColor that will be used as background
+    ///   - fullScreenOptions: A set of `NSApplication.PresentationOptions`
+    ///     that define how the window should appear and behave in full-screen.
+    ///   - tabbingMode: The tabbing mode for the window. Defaults to
+    ///     `.automatic`, which preserves the system’s default behavior.
+    ///   - backgroundColor: The optional `NSColor` used as the window’s
+    ///     background, allowing visual alignment with the SwiftUI content.
     ///
     /// Example usage:
     /// ```swift
@@ -141,7 +141,7 @@ public extension View {
     func windowPresentation(
         _ fullScreenOptions: NSApplication.PresentationOptions,
         tabbingMode: NSWindow.TabbingMode = .automatic,
-        backgroundColor: NSColor? = nil
+        backgroundColor: NSColor = NSColor.windowBackgroundColor
     ) -> some View {
         self.modifier(WindowPresentation(
             fullScreenOptions,
