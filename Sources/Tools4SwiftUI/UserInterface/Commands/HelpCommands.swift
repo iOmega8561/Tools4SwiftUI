@@ -48,16 +48,24 @@ public struct HelpCommands: Commands {
             
             if let officialWebsiteURL {
                 Link(destination: officialWebsiteURL) {
-                    Label("action-help-readme", systemImage: "safari")
-                        .labelStyle(.titleAndIcon)
+                    Label {
+                        Text(verbatim: .crossLocalized("action-help-readme"))
+                    } icon: {
+                        Image(systemName: "safari")
+                    }
+                    .labelStyle(.titleAndIcon)
                 }
                 .keyboardShortcut("/", modifiers: [.command, .control])
             }
             
             if let privacyPolicyURL {
                 Link(destination: privacyPolicyURL) {
-                    Label("action-help-privacy", systemImage: "person.badge.key")
-                        .labelStyle(.titleAndIcon)
+                    Label {
+                        Text(verbatim: .crossLocalized("action-help-privacy"))
+                    } icon: {
+                        Image(systemName: "person.badge.key")
+                    }
+                    .labelStyle(.titleAndIcon)
                 }
                 .keyboardShortcut("/", modifiers: [.command, .option])
             }

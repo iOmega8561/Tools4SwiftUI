@@ -61,15 +61,19 @@ public struct EditorCommands: Commands {
         // async variants bound to the provided actions.
         CommandGroup(replacing: .newItem) {
             if let newDocumentAction {
-                AsyncButton("action-new-document",
-                            systemImage: "plus",
-                            action: newDocumentAction)
+                AsyncButton(
+                    verbatim: .crossLocalized("action-new-document"),
+                    systemImage: "plus",
+                    action: newDocumentAction
+                )
                 .keyboardShortcut("N", modifiers: [.command])
             }
             if let openDocumentAction {
-                AsyncButton("action-open-document",
-                            systemImage: "arrow.up.forward",
-                            action: openDocumentAction)
+                AsyncButton(
+                    verbatim: .crossLocalized("action-open-document"),
+                    systemImage: "arrow.up.forward",
+                    action: openDocumentAction
+                )
                 .keyboardShortcut("O", modifiers: [.command])
             }
         }
@@ -78,15 +82,19 @@ public struct EditorCommands: Commands {
         // async Save/Delete operations.
         CommandGroup(replacing: .saveItem) {
             if let saveDocumentAction {
-                AsyncButton("action-save-document",
-                            systemImage: "square.and.arrow.down",
-                            action: saveDocumentAction)
+                AsyncButton(
+                    verbatim: .crossLocalized("action-save-document"),
+                    systemImage: "square.and.arrow.down",
+                    action: saveDocumentAction
+                )
                 .keyboardShortcut("S", modifiers: [.command])
             }
             if let deleteDocumentAction {
-                AsyncButton("action-delete-document",
-                            systemImage: "trash",
-                            action: deleteDocumentAction)
+                AsyncButton(
+                    verbatim: .crossLocalized("action-delete-document"),
+                    systemImage: "trash",
+                    action: deleteDocumentAction
+                )
             }
         }
     }
