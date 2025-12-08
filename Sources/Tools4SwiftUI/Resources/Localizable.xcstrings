@@ -1,6 +1,9 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
+    "\u0001__MISSING_LOCALE_KEY__" : {
+      "shouldTranslate" : false
+    },
     "action-delete-document" : {
       "localizations" : {
         "en" : {
@@ -141,6 +144,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Errore"
+          }
+        }
+      }
+    },
+    "window-main-title" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Main Window"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Finestra principale"
           }
         }
       }

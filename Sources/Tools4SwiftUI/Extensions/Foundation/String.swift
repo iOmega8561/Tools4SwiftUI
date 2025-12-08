@@ -66,7 +66,7 @@ extension String {
         
         // Sentinel value that should never appear as a real localization
         // and is used to detect whether the key exists in `Bundle.main`.
-        let sentinelRaw = "\u{0001}__NO_OVERRIDE__"
+        let sentinelRaw = "\u{0001}__MISSING_LOCALE_KEY__"
         let sentinel = String.LocalizationValue(stringLiteral: sentinelRaw)
         
         // Step 1: Try to resolve the key from the app's main bundle
