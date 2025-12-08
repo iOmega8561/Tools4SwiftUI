@@ -103,12 +103,3 @@ public extension Scene {
         }
     }
 }
-
-/*
- func removeEditorCommands() -> some Scene {
-     return self
-         .removeCommand(for: .pasteboard)
-         .removeCommand(for: .undoRedo)
-         .removeCommand(for: .toolbar)
- }
- */
