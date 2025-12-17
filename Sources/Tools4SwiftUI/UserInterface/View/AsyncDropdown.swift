@@ -63,6 +63,11 @@ public struct AsyncDropdown<Content: View>: View {
     /// When set to `true`, the button is temporarily disabled to prevent multiple executions
     /// while the asynchronous task is in progress.
     private let disableWhenRunning: Bool
+    
+    /// A Boolean value that determines whether the bottom right chevron should be displayd when the button is hovered
+    ///
+    /// When set to `true`, the button displays a "chevron.down" sfSymbol  in the bottom right corner when hovered
+    private let displaysChevron: Bool
 
     /// A closure that returns the button's title text.
     ///
@@ -125,7 +130,7 @@ public struct AsyncDropdown<Content: View>: View {
                 .padding(.horizontal)
                 .padding(.vertical, { if #available(macOS 26.0, *) { 10 } else { 6 } }())
                 
-                if isHovered {
+                if isHovered && displaysChevron {
                     
                     Image(systemName: "chevron.down")
                         .foregroundStyle(.secondary)
@@ -196,16 +201,19 @@ public struct AsyncDropdown<Content: View>: View {
     ///   - titleKey: The localized string key for the button's title.
     ///   - systemImage: The name of the SF Symbol to use as an icon.
     ///   - disableWhenRunning: Whether to disable the button while executing the action.
+    ///   - displaysChevron: Whether to display the bottom right chevron indicator, on hover
     ///   - content: The content of the dropdown menu.
     ///   - action: The asynchronous action to be executed.
     public init(
         _ titleKey: LocalizedStringKey,
         systemImage: String,
         disableWhenRunning: Bool = true,
+        displaysChevron: Bool = { if #available(macOS 26.0, *) { false } else { true } }(),
         @ViewBuilder content: @escaping () -> Content,
         action: @escaping () async throws -> Void
     ) {
         self.disableWhenRunning = disableWhenRunning
+        self.displaysChevron = displaysChevron
         self.text = { Text(titleKey) }
         self.image = { Image(systemName: systemImage) }
         self.content = content
@@ -218,16 +226,19 @@ public struct AsyncDropdown<Content: View>: View {
     ///   - titleKey: The localized string key for the button's title.
     ///   - image: A custom `Image` to use as an icon.
     ///   - disableWhenRunning: Whether to disable the button while executing the action.
+    ///   - displaysChevron: Whether to display the bottom right chevron indicator, on hover
     ///   - content: The content of the dropdown menu.
     ///   - action: The asynchronous action to be executed.
     public init(
         _ titleKey: LocalizedStringKey,
         image: Image,
         disableWhenRunning: Bool = true,
+        displaysChevron: Bool = { if #available(macOS 26.0, *) { false } else { true } }(),
         @ViewBuilder content: @escaping () -> Content,
         action: @escaping () async throws -> Void
     ) {
         self.disableWhenRunning = disableWhenRunning
+        self.displaysChevron = displaysChevron
         self.text = { Text(titleKey) }
         self.image = { image }
         self.content = content
@@ -240,16 +251,19 @@ public struct AsyncDropdown<Content: View>: View {
     ///   - verbatim: The title text for the button (non-localized).
     ///   - systemImage: The name of the SF Symbol to use as an icon.
     ///   - disableWhenRunning: Whether to disable the button while executing the action.
+    ///   - displaysChevron: Whether to display the bottom right chevron indicator, on hover
     ///   - content: The content of the dropdown menu.
     ///   - action: The asynchronous action to be executed.
     public init(
         verbatim: String,
         systemImage: String,
         disableWhenRunning: Bool = true,
+        displaysChevron: Bool = { if #available(macOS 26.0, *) { false } else { true } }(),
         @ViewBuilder content: @escaping () -> Content,
         action: @escaping () async throws -> Void
     ) {
         self.disableWhenRunning = disableWhenRunning
+        self.displaysChevron = displaysChevron
         self.text = { Text(verbatim: verbatim) }
         self.image = { Image(systemName: systemImage) }
         self.content = content
@@ -262,16 +276,19 @@ public struct AsyncDropdown<Content: View>: View {
     ///   - verbatim: The title text for the button (non-localized).
     ///   - image: A custom `Image` to use as an icon.
     ///   - disableWhenRunning: Whether to disable the button while executing the action.
+    ///   - displaysChevron: Whether to display the bottom right chevron indicator, on hover
     ///   - content: The content of the dropdown menu.
     ///   - action: The asynchronous action to be executed.
     public init(
         verbatim: String,
         image: Image,
         disableWhenRunning: Bool = true,
+        displaysChevron: Bool = { if #available(macOS 26.0, *) { false } else { true } }(),
         @ViewBuilder content: @escaping () -> Content,
         action: @escaping () async throws -> Void
     ) {
         self.disableWhenRunning = disableWhenRunning
+        self.displaysChevron = displaysChevron
         self.text = { Text(verbatim: verbatim) }
         self.image = { image }
         self.content = content
