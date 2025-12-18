@@ -114,7 +114,7 @@ public struct ComplexPicker<Value: RandomAccessCollection, Label: View>: View wh
     private func fill(_ current: Value.Element) -> AnyShapeStyle {
         
         if isSelected(current) {
-            return AnyShapeStyle(Color.accentColor.opacity(0.8))
+            return AnyShapeStyle(Color.accentColor)
         }
         
         return AnyShapeStyle(BackgroundStyle.background)
