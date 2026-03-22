@@ -21,6 +21,7 @@
 //  Created by Giuseppe Rocco on 08/12/25.
 //
 
+#if os(macOS) || os(visionOS)
 /// A reusable scene that configures the main application window with
 /// a localized title, a stable window identifier, and a matching menu
 /// command to reopen the same window.
@@ -154,3 +155,4 @@ public struct MainWindow<Content: View>: Scene {
         self.content = content
     }
 }
+#endif
