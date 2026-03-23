@@ -23,6 +23,7 @@
 
 public extension Scene {
     
+    #if os(macOS)
     /// Removes the default command group associated with the given placement
     /// from this scene by replacing it with an empty `CommandGroup`.
     ///
@@ -102,4 +103,5 @@ public extension Scene {
             )
         }
     }
+    #endif
 }
