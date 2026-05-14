@@ -32,6 +32,8 @@
 @available(macOS 14.0, iOS 17.0, tvOS 17.0, visionOS 1.0, *)
 public struct AsyncDropdown<Content: View>: View {
     
+    @Environment(\.isEnabled) var isEnabled
+    
     /// A custom button style that visually responds to user interaction.
     ///
     /// This style changes the foreground color and background color when the button is pressed,
@@ -45,12 +47,17 @@ public struct AsyncDropdown<Content: View>: View {
     ///   - The background remains clear.
     private struct _ButtonStyle: ButtonStyle {
         
+        var isEnabled: Bool
+        
         /// Creates the view for the button using the given configuration.
         /// - Parameter configuration: Provides the label and interaction state of the button.
         /// - Returns: A modified view that visually reflects the button's pressed state.
         func makeBody(configuration: Configuration) -> some View {
             configuration.label
-                .foregroundStyle(HierarchicalShapeStyle.buttonForegroundStyle(for: configuration)) // Changes text color when pressed
+                .foregroundStyle(HierarchicalShapeStyle.buttonForegroundStyle(
+                    for: configuration,
+                    buttonEnabled: isEnabled
+                )) // Changes text color when pressed
                 .background(configuration.isPressed ? Color.gray.opacity(0.2) : .clear) // Background changes on press
                 .clipShape(.buttonBorder) // Applies rounded corners
         }
@@ -155,7 +162,7 @@ public struct AsyncDropdown<Content: View>: View {
         } primaryAction: { buttonHandler() }
         
             .menuStyle(.button)
-            .buttonStyle(_ButtonStyle())
+            .buttonStyle(_ButtonStyle(isEnabled: isEnabled))
             .onHover { isHovered = $0 }
             .disabled(isDisabled)
         

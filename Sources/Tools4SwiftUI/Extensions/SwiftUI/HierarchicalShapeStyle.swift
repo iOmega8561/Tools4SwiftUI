@@ -54,7 +54,17 @@ public extension HierarchicalShapeStyle {
     /// This centralizes the OS-conditional logic and the empirically
     /// tuned styles, so callers can simply request the correct style
     /// instead of duplicating `isPressed` and version checks.
-    static func buttonForegroundStyle(for configuration: ButtonStyleConfiguration) -> HierarchicalShapeStyle {
-        configuration.isPressed ? .pressedButtonForegroundStyle : .unpressedButtonForegroundStyle
+    static func buttonForegroundStyle(
+        for configuration: ButtonStyleConfiguration,
+        buttonEnabled: Bool
+    ) -> HierarchicalShapeStyle {
+        
+        guard buttonEnabled else {
+            return .tertiary
+        }
+        
+        return configuration.isPressed ?
+            .pressedButtonForegroundStyle :
+            .unpressedButtonForegroundStyle
     }
 }
