@@ -21,6 +21,8 @@
 //  Created by Giuseppe Rocco on 17/12/25.
 //
 
+import Foundation
+
 public extension Optional where Wrapped == URL {
 
     /// Executes a closure while safely accessing an optional security-scoped resource.

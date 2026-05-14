@@ -21,7 +21,8 @@
 //  Created by Giuseppe Rocco on 07/12/25.
 //
 
-#if os(macOS)
+#if canImport(AppKit)
+import AppKit
 import ObjectiveC
 
 extension NSWindow {

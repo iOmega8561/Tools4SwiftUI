@@ -21,6 +21,8 @@
 //  Created by Giuseppe Rocco on 17/12/25.
 //
 
+import Foundation
+
 public extension URL {
 
     /// Executes a closure while safely accessing a security-scoped resource.

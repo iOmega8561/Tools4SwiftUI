@@ -21,6 +21,8 @@
 //  Created by Giuseppe Rocco on 07/12/25.
 //
 
+import SwiftUI
+
 public extension Scene {
     
     #if os(macOS)

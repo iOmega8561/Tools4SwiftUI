@@ -21,7 +21,9 @@
 //  Created by Giuseppe Rocco on 12/01/25.
 //
 
-#if os(macOS)
+#if canImport(AppKit)
+import AppKit
+
 public extension NSAlert {
     
     /// Displays an error message to the user using an `NSAlert` object.

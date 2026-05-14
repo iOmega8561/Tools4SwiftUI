@@ -22,8 +22,10 @@
 //
 
 #if os(macOS)
+public import SwiftUI
+public import UniformTypeIdentifiers
 
-import UniformTypeIdentifiers
+import AppKit
 
 /// A macOS-specific SwiftUI component for selecting a file using `NSOpenPanel` with seamless integration of security-scoped resources.
 ///

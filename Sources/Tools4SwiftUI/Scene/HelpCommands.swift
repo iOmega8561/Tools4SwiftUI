@@ -21,7 +21,8 @@
 //  Created by Giuseppe Rocco on 07/12/25.
 //
 
-#if os(macOS)
+public import SwiftUI
+
 public struct HelpCommands: Commands {
     
     /// The URL of the app’s official website shown in the Help menu.
@@ -89,4 +90,3 @@ public struct HelpCommands: Commands {
         self.privacyPolicyURL = privacyPolicyURL
     }
 }
-#endif

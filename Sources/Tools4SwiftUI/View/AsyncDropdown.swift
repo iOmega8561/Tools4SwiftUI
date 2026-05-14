@@ -21,6 +21,8 @@
 //  Created by Giuseppe Rocco on 17/02/25.
 //
 
+public import SwiftUI
+
 /// A dropdown menu button that supports asynchronous primary actions.
 ///
 /// `AsyncDropdown` provides a menu with additional options while also supporting a **primary action**

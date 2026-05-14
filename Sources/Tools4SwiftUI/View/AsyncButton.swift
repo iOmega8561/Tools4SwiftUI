@@ -21,6 +21,8 @@
 //  Created by Giuseppe Rocco on 12/05/24.
 //
 
+public import SwiftUI
+
 /// `AsyncButton` is a customizable button that executes an asynchronous task when tapped.
 ///
 /// This view combines the functionality of a standard SwiftUI button with the ability to handle

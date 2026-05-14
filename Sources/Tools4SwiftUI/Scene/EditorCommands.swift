@@ -21,6 +21,8 @@
 //  Created by Giuseppe Rocco on 07/12/25.
 //
 
+public import SwiftUI
+
 public struct EditorCommands: Commands {
     
     /// Optional async action invoked when the user requests to create a new document.

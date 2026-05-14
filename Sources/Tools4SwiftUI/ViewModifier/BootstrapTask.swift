@@ -21,6 +21,8 @@
 //  Created by Giuseppe Rocco on 11/11/24.
 //
 
+public import SwiftUI
+
 /// `BootstrapTask` is a view modifier that runs an asynchronous task only once per view lifecycle.
 ///
 /// This modifier provides a way to execute an asynchronous task when the view appears, ensuring

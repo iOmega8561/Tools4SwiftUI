@@ -21,6 +21,7 @@
 //  Created by Giuseppe Rocco on 05/01/25.
 //
 
+import SwiftUI
 import UniformTypeIdentifiers
 
 public extension View {

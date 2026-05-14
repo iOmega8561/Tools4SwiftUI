@@ -22,6 +22,7 @@
 //
 
 #if os(macOS)
+import AppKit
 import UniformTypeIdentifiers
 
 public extension NSSavePanel {

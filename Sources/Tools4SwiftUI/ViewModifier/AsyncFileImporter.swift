@@ -21,7 +21,8 @@
 //  Created by Giuseppe Rocco on 12/01/25.
 //
 
-import UniformTypeIdentifiers
+public import SwiftUI
+public import UniformTypeIdentifiers
 
 /// A view modifier that enables asynchronous file importing in a SwiftUI view.
 ///

@@ -22,6 +22,8 @@
 //
 
 #if os(macOS) || os(visionOS)
+public import SwiftUI
+
 /// A reusable scene that configures the main application window with
 /// a localized title, a stable window identifier, and a matching menu
 /// command to reopen the same window.

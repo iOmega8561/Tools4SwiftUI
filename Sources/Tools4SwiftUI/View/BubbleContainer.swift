@@ -21,6 +21,8 @@
 //  Created by Giuseppe Rocco on 14/10/24.
 //
 
+public import SwiftUI
+
 /// `BubbleContainer` is a reusable container view with a styled background and an optional label.
 ///
 /// This view provides a visually distinct "bubble" container with a rounded rectangle background and

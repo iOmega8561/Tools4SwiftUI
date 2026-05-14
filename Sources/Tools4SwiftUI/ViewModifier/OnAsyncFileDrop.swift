@@ -21,7 +21,8 @@
 //  Created by Giuseppe Rocco on 13/07/25.
 //
 
-import UniformTypeIdentifiers
+public import SwiftUI
+public import UniformTypeIdentifiers
 
 /// A view modifier that handles drag-and-drop of file-based UTTypes and invokes an
 /// async handler **off the main thread** whenever each file’s data has finished loading.

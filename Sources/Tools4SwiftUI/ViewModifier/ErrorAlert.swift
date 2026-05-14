@@ -21,6 +21,8 @@
 //  Created by Giuseppe Rocco on 12/01/25.
 //
 
+public import SwiftUI
+
 /// A view modifier that displays an alert when an error is encountered.
 ///
 /// Use `ErrorAlert` to present a SwiftUI alert whenever a bound `Error?` variable is non-`nil`.

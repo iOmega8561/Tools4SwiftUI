@@ -21,7 +21,10 @@
 //  Created by Giuseppe Rocco on 12/01/25.
 //
 
-#if os(macOS)
+#if canImport(AppKit)
+public import SwiftUI
+public import AppKit
+
 /// A view modifier that customizes the behavior of a macOS window in full-screen
 /// and manages its tabbing mode without taking ownership of the window delegate.
 ///

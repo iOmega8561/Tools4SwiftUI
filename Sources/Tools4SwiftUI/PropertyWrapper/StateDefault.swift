@@ -21,7 +21,8 @@
 //  Created by Giuseppe Rocco on 14/05/2026.
 //
 
-import Foundation
+public import SwiftUI
+public import Observation
 
 /// # `StateDefault<T>`
 ///

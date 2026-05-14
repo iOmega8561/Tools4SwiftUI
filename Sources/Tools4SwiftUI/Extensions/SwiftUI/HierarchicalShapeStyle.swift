@@ -21,6 +21,8 @@
 //  Created by Giuseppe Rocco on 07/12/25.
 //
 
+import SwiftUI
+
 /// Provides canonical foreground styles for buttons across platforms.
 /// This is based on empirical testing while migrating to macOS 26,
 /// which changed how `.primary` and `.secondary` render for button
