@@ -64,7 +64,7 @@ import Foundation
 ///   key is absent or the stored type doesn't match `T`, `defaultValue` is used.
 @available(macOS 14.0, iOS 17.0, tvOS 17.0, visionOS 1.0, *)
 @propertyWrapper @Observable @MainActor
-final class StateDefault<T>: Sendable, Observation.Observable {
+public final class StateDefault<T>: Sendable, Observation.Observable {
     
     /// The UserDefaults key for this property.
     private let key: String
