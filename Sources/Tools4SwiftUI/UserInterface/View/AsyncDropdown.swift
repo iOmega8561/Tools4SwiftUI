@@ -32,8 +32,6 @@
 @available(macOS 14.0, iOS 17.0, tvOS 17.0, visionOS 1.0, *)
 public struct AsyncDropdown<Content: View>: View {
     
-    @Environment(\.isEnabled) var isEnabled
-    
     /// A custom button style that visually responds to user interaction.
     ///
     /// This style changes the foreground color and background color when the button is pressed,
@@ -65,11 +63,12 @@ public struct AsyncDropdown<Content: View>: View {
 
     // MARK: - Properties
     
-    /// A Boolean value that determines whether the button should be disabled while the asynchronous task is running.
+    @Environment(\.isEnabled) private var isEnabled
+    
+    /// A Boolean value that determines whether the button should allow to cancel asynchronous task.
     ///
-    /// When set to `true`, the button is temporarily disabled to prevent multiple executions
-    /// while the asynchronous task is in progress.
-    private let disableWhenRunning: Bool
+    /// When set to `false`, the button becomes unresponsive and visually indicates it is disabled.
+    private let allowsCancel: Bool
     
     /// A Boolean value that determines whether the bottom right chevron should be displayd when the button is hovered
     ///
@@ -97,15 +96,11 @@ public struct AsyncDropdown<Content: View>: View {
     /// allows for error handling.
     private let action: () async throws -> Void
 
-    /// Tracks whether the button is currently disabled.
+    /// Tracks the async task
     ///
-    /// This state variable is updated when the task starts and resets when it completes.
-    @State private var isDisabled = false
-
-    /// Tracks whether the progress view (loading indicator) is visible.
-    ///
-    /// This determines whether a loading spinner should be displayed while the task is running.
-    @State private var showProgressView = false
+    /// This state variable determines whether the progress indicator should be displayed while the task is running.
+    /// It is also used to determine whether to display the *stop.fill* symbol during execution
+    @State private var currentTask: Task<Void, Error>? = nil
 
     #if !os(macOS)
     /// Tracks whether an error has been encountered during execution.
@@ -149,14 +144,17 @@ public struct AsyncDropdown<Content: View>: View {
                 }
             }
             .background(isHovered ? .gray.opacity(0.1) : .clear)
-            .opacity(showProgressView ? 0 : 1)
+            .opacity(currentTask != nil ? 0 : 1)
             .overlay {
                 ProgressView()
-                    .opacity(showProgressView ? 1 : 0)
+                    .opacity(currentTask != nil && !allowsCancel ? 1 : 0)
                     .scaleEffect(
                         CGSize(width: 0.5, height: 0.5),
                         anchor: .center
                     )
+                Image(systemName: "stop.fill")
+                    .imageScale(.medium)
+                    .opacity(currentTask != nil && allowsCancel ? 1 : 0)
             }
             
         } primaryAction: { buttonHandler() }
@@ -164,7 +162,7 @@ public struct AsyncDropdown<Content: View>: View {
             .menuStyle(.button)
             .buttonStyle(_ButtonStyle(isEnabled: isEnabled))
             .onHover { isHovered = $0 }
-            .disabled(isDisabled)
+            .disabled(currentTask != nil && !allowsCancel)
         
             #if !os(macOS)
             .errorAlert(currentError: $currentError)
@@ -179,10 +177,14 @@ public struct AsyncDropdown<Content: View>: View {
     /// - The progress view is displayed while the task is executing.
     /// - If an error occurs, it is handled appropriately depending on the platform.
     private func buttonHandler() {
-        isDisabled = disableWhenRunning
+        if let currentTask {
+            return currentTask.cancel()
+        }
 
-        Task(priority: .userInitiated) { @MainActor in
-            showProgressView = disableWhenRunning
+        currentTask = Task(priority: .userInitiated) { @MainActor in
+            defer {
+                currentTask = nil
+            }
 
             do {
                 try await action()
@@ -193,10 +195,6 @@ public struct AsyncDropdown<Content: View>: View {
                 NSAlert.displayError(error) // Use AppKit alert for macOS
                 #endif
             }
-
-            // Reset button state after task completes
-            isDisabled = false
-            showProgressView = false
         }
     }
 
@@ -207,19 +205,19 @@ public struct AsyncDropdown<Content: View>: View {
     /// - Parameters:
     ///   - titleKey: The localized string key for the button's title.
     ///   - systemImage: The name of the SF Symbol to use as an icon.
-    ///   - disableWhenRunning: Whether to disable the button while executing the action.
+    ///   - allowsCancel: A boolean that dictates wether the button should allow cancelling the async task.
     ///   - displaysChevron: Whether to display the bottom right chevron indicator, on hover
     ///   - content: The content of the dropdown menu.
     ///   - action: The asynchronous action to be executed.
     public init(
         _ titleKey: LocalizedStringKey,
         systemImage: String,
-        disableWhenRunning: Bool = true,
+        allowsCancel: Bool = false,
         displaysChevron: Bool = { if #available(macOS 26.0, *) { false } else { true } }(),
         @ViewBuilder content: @escaping () -> Content,
         action: @escaping () async throws -> Void
     ) {
-        self.disableWhenRunning = disableWhenRunning
+        self.allowsCancel = allowsCancel
         self.displaysChevron = displaysChevron
         self.text = { Text(titleKey) }
         self.image = { Image(systemName: systemImage) }
@@ -232,19 +230,19 @@ public struct AsyncDropdown<Content: View>: View {
     /// - Parameters:
     ///   - titleKey: The localized string key for the button's title.
     ///   - image: A custom `Image` to use as an icon.
-    ///   - disableWhenRunning: Whether to disable the button while executing the action.
+    ///   - allowsCancel: A boolean that dictates wether the button should allow cancelling the async task.
     ///   - displaysChevron: Whether to display the bottom right chevron indicator, on hover
     ///   - content: The content of the dropdown menu.
     ///   - action: The asynchronous action to be executed.
     public init(
         _ titleKey: LocalizedStringKey,
         image: Image,
-        disableWhenRunning: Bool = true,
+        allowsCancel: Bool = false,
         displaysChevron: Bool = { if #available(macOS 26.0, *) { false } else { true } }(),
         @ViewBuilder content: @escaping () -> Content,
         action: @escaping () async throws -> Void
     ) {
-        self.disableWhenRunning = disableWhenRunning
+        self.allowsCancel = allowsCancel
         self.displaysChevron = displaysChevron
         self.text = { Text(titleKey) }
         self.image = { image }
@@ -257,19 +255,19 @@ public struct AsyncDropdown<Content: View>: View {
     /// - Parameters:
     ///   - verbatim: The title text for the button (non-localized).
     ///   - systemImage: The name of the SF Symbol to use as an icon.
-    ///   - disableWhenRunning: Whether to disable the button while executing the action.
+    ///   - allowsCancel: A boolean that dictates wether the button should allow cancelling the async task.
     ///   - displaysChevron: Whether to display the bottom right chevron indicator, on hover
     ///   - content: The content of the dropdown menu.
     ///   - action: The asynchronous action to be executed.
     public init(
         verbatim: String,
         systemImage: String,
-        disableWhenRunning: Bool = true,
+        allowsCancel: Bool = false,
         displaysChevron: Bool = { if #available(macOS 26.0, *) { false } else { true } }(),
         @ViewBuilder content: @escaping () -> Content,
         action: @escaping () async throws -> Void
     ) {
-        self.disableWhenRunning = disableWhenRunning
+        self.allowsCancel = allowsCancel
         self.displaysChevron = displaysChevron
         self.text = { Text(verbatim: verbatim) }
         self.image = { Image(systemName: systemImage) }
@@ -282,19 +280,19 @@ public struct AsyncDropdown<Content: View>: View {
     /// - Parameters:
     ///   - verbatim: The title text for the button (non-localized).
     ///   - image: A custom `Image` to use as an icon.
-    ///   - disableWhenRunning: Whether to disable the button while executing the action.
+    ///   - allowsCancel: A boolean that dictates wether the button should allow cancelling the async task.
     ///   - displaysChevron: Whether to display the bottom right chevron indicator, on hover
     ///   - content: The content of the dropdown menu.
     ///   - action: The asynchronous action to be executed.
     public init(
         verbatim: String,
         image: Image,
-        disableWhenRunning: Bool = true,
+        allowsCancel: Bool = false,
         displaysChevron: Bool = { if #available(macOS 26.0, *) { false } else { true } }(),
         @ViewBuilder content: @escaping () -> Content,
         action: @escaping () async throws -> Void
     ) {
-        self.disableWhenRunning = disableWhenRunning
+        self.allowsCancel = allowsCancel
         self.displaysChevron = displaysChevron
         self.text = { Text(verbatim: verbatim) }
         self.image = { image }
