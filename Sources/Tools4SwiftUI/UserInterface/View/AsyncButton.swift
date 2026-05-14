@@ -43,10 +43,10 @@ public struct AsyncButton<Label: View>: View {
     /// This can be used to specify roles like `.destructive` or `.cancel`.
     private let role: ButtonRole?
     
-    /// A Boolean value that determines whether the button should be disabled while the asynchronous task is running.
+    /// A Boolean value that determines whether the button should allow to cancel asynchronous task.
     ///
-    /// When set to `true`, the button becomes unresponsive and visually indicates it is disabled.
-    private let disableWhenRunning: Bool
+    /// When set to `false`, the button becomes unresponsive and visually indicates it is disabled.
+    private let allowsCancel: Bool
     
     /// The asynchronous action to be executed when the button is tapped.
     ///
@@ -58,16 +58,12 @@ public struct AsyncButton<Label: View>: View {
     ///
     /// This closure defines the button's visual appearance, such as a text label or a custom view.
     @ViewBuilder private let label: () -> Label
-
-    /// Tracks whether the button is currently disabled.
-    ///
-    /// This state variable is updated when the task starts and resets when it completes.
-    @State private var isDisabled = false
     
-    /// Tracks whether the progress view is visible.
+    /// Tracks the async task
     ///
     /// This state variable determines whether the progress indicator should be displayed while the task is running.
-    @State private var showProgressView = false
+    /// It is also used to determine whether to display the *stop.fill* symbol during execution
+    @State private var currentTask: Task<Void, Error>? = nil
 
     #if !os(macOS)
     /// Tracks whether an error has been encountered
@@ -86,22 +82,25 @@ public struct AsyncButton<Label: View>: View {
     /// - Dynamic handling of the `disabled` state based on the progress of the task.
     /// - An overlay with a `ProgressView` to indicate task execution.
     public var body: some View {
-        Button(role: role, action: buttonHandler) {
+        Button(
+            role: currentTask != nil && allowsCancel ? .cancel : role,
+            action: buttonHandler
+        ) {
             label()
-                .opacity(showProgressView ? 0 : 1)
+                .opacity(currentTask != nil ? 0 : 1)
                 .overlay {
-                    
                     ProgressView()
-                    
-                        .opacity(showProgressView ? 1 : 0)
-                    
+                        .opacity(currentTask != nil && !allowsCancel ? 1 : 0)
                         .scaleEffect(
                             CGSize(width: 0.5, height: 0.5),
                             anchor: .center
                         )
+                    Image(systemName: "stop.fill")
+                        .imageScale(.medium)
+                        .opacity(currentTask != nil && allowsCancel ? 1 : 0)
                 }
         }
-        .disabled(isDisabled)
+        .disabled(currentTask != nil && !allowsCancel)
         #if !os(macOS)
         .errorAlert(currentError: $currentError)
         #endif
@@ -119,11 +118,15 @@ public struct AsyncButton<Label: View>: View {
     /// - Note: Where `AppKit` is not available (everything but macOS), instead of using `Tools4SwiftUI.displayError`,
     /// The state variable `currentError` is used since it allows to trigger a native SwiftUI alert on the async button.
     private func buttonHandler() {
-        isDisabled = disableWhenRunning
-    
-        Task(priority: .userInitiated) { @MainActor in
-            showProgressView = disableWhenRunning
-
+        if let currentTask {
+            return currentTask.cancel()
+        }
+        
+        currentTask = Task(priority: .userInitiated) { @MainActor in
+            defer {
+                currentTask = nil
+            }
+            
             do {
                 try await action()
                 
@@ -134,8 +137,6 @@ public struct AsyncButton<Label: View>: View {
                 NSAlert.displayError(error)
                 #endif
             }
-
-            isDisabled = false; showProgressView = false
         }
     }
     
@@ -145,17 +146,17 @@ public struct AsyncButton<Label: View>: View {
     ///
     /// - Parameters:
     ///   - role: The role of the button.
-    ///   - disableWhenRunning: A boolean that dictates is the button should be disabled while the async task is running.
+    ///   - allowsCancel: A boolean that dictates wether the button should allow cancelling the async task.
     ///   - action: A closure to be executed asynchronously.
     ///   - label: A line of text that will be displayed as the button label.
     public init(
         role: ButtonRole? = nil ,
-        disableWhenRunning: Bool = true,
+        allowsCancel: Bool = false,
         action: @escaping () async throws -> Void,
         @ViewBuilder label: @escaping () -> Label
     ) {
         self.role = role
-        self.disableWhenRunning = disableWhenRunning
+        self.allowsCancel = allowsCancel
         self.action = action
         self.label = label
     }
@@ -170,18 +171,18 @@ extension AsyncButton where Label == Text {
     /// - Parameters:
     ///   - title: A `String` literal that will be displayed as the button label.
     ///   - role: The role of the button.
-    ///   - disableWhenRunning: A boolean that dictates is the button should be disabled while the async task is running.
+    ///   - allowsCancel: A boolean that dictates wether the button should allow cancelling the async task.
     ///   - action: A closure to be executed asynchronously.
     public init(
         verbatim title: String,
         role: ButtonRole? = nil,
-        disableWhenRunning: Bool = true,
+        allowsCancel: Bool = false,
         action: @escaping () async throws -> Void
     ) {
         
         self.init(
             role: role,
-            disableWhenRunning: disableWhenRunning,
+            allowsCancel: allowsCancel,
             action: action
         ) {
             Text(verbatim: title)
@@ -193,18 +194,18 @@ extension AsyncButton where Label == Text {
     /// - Parameters:
     ///   - titleKey: A `LocalizedStringKey` that will allow to display a localized button label.
     ///   - role: The role of the button.
-    ///   - disableWhenRunning: A boolean that dictates is the button should be disabled while the async task is running.
+    ///   - allowsCancel: A boolean that dictates wether the button should allow cancelling the async task.
     ///   - action: A closure to be executed asynchronously.
     public init(
         _ titleKey: LocalizedStringKey,
         role: ButtonRole? = nil,
-        disableWhenRunning: Bool = true,
+        allowsCancel: Bool = false,
         action: @escaping () async throws -> Void
     ) {
         
         self.init(
             role: role,
-            disableWhenRunning: disableWhenRunning,
+            allowsCancel: allowsCancel,
             action: action
         ) {
             Text(titleKey)
@@ -220,19 +221,19 @@ extension AsyncButton where Label == SwiftUI.Label<Text, Image> {
     ///   - title: A `String` literal that will be displayed as the button label.
     ///   - systemImage: A `String` literal that represents the name of a SFSymbol (System Image),
     ///   - role: The role of the button.
-    ///   - disableWhenRunning: A boolean that dictates is the button should be disabled while the async task is running.
+    ///   - allowsCancel: A boolean that dictates wether the button should allow cancelling the async task.
     ///   - action: A closure to be executed asynchronously.
     public init(
         verbatim title: String,
         systemImage: String,
         role: ButtonRole? = nil,
-        disableWhenRunning: Bool = true,
+        allowsCancel: Bool = false,
         action: @escaping () async throws -> Void
     ) {
         
         self.init(
             role: role,
-            disableWhenRunning: disableWhenRunning,
+            allowsCancel: allowsCancel,
             action: action
         ) {
             Label(title, systemImage: systemImage)
@@ -245,19 +246,19 @@ extension AsyncButton where Label == SwiftUI.Label<Text, Image> {
     ///   - titleKey: A `LocalizedStringKey` that will allow to display a localized button label.
     ///   - systemImage: A `String` that represents the name of a SFSymbol (System Image),
     ///   - role: The role of the button.
-    ///   - disableWhenRunning: A boolean that dictates is the button should be disabled while the async task is running.
+    ///   - allowsCancel: A boolean that dictates wether the button should allow cancelling the async task.
     ///   - action: A closure to be executed asynchronously.
     public init(
         _ titleKey: LocalizedStringKey,
         systemImage: String,
         role: ButtonRole? = nil,
-        disableWhenRunning: Bool = true,
+        allowsCancel: Bool = false,
         action: @escaping () async throws -> Void
     ) {
         
         self.init(
             role: role,
-            disableWhenRunning: disableWhenRunning,
+            allowsCancel: allowsCancel,
             action: action
         ) {
             Label(titleKey, systemImage: systemImage)
